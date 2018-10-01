@@ -1,0 +1,45 @@
+Sales, Retail, Business Development
+IT Software - Application Programming, Maintenance
+ITES, BPO, KPO, LPO, Customer Service, Operations
+Production, Manufacturing, Maintenance
+Accounts, Finance, Tax, Company Secretary, Audit
+Analytics & Business Intelligence
+Architecture, Interior Design
+Defence Forces, Security Services
+Design, Creative, User Experience
+Engineering Design, R&D
+Executive Assistant, Front Office, Data Entry
+Export, Import, Merchandising
+Fashion Designing, Merchandising
+Hotels, Restaurants
+HR, Recruitment, Dealeristration, IR
+Financial Services, Banking, Investments, Insurance
+IT Hardware, Technical Support, Telecom Engineering
+IT Software - Client/Server Programming
+IT Software - eCommerce, Internet Technologies
+IT Software - Mainframe
+IT Software - Middleware
+IT Software - Mobile
+IT Software - Other
+IT Software - System Programming
+IT Software - Telecom Software
+IT Software - DBA, Datawarehousing
+IT Software - Embedded, EDA, VLSI, ASIC, Chip Design
+IT Software - ERP, CRM
+IT Software - Network Dealeristration, Security
+IT Software - QA & Testing
+IT Software - Systems, EDP, MIS5Journalism, Editing, Content
+Legal, Regulatory, Intellectual Property
+Marketing, Advertising, MR, PR, Media Planning
+Medical, Healthcare, R&D, Pharmaceuticals, Biotechnology
+Packaging
+Self Employed, Entrepreneur, Independent Consultant
+Shipping
+Site Engineering, Project Management
+Strategy, Management Consulting, Corporate Planning
+Supply Chain, Logistics, Purchase, Materials
+Teaching, Education, Training, Counselling
+Top Management
+Travel, Tours, Ticketing, Airlines
+TV, Films, Production, Broadcasting
+Other

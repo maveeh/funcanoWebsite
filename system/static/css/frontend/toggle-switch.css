@@ -1,0 +1,81 @@
+.switch-toggle a, .switch-light span span {
+    display: none;
+}
+
+.switch-toggle {
+    display: block;
+    height: 30px;
+    padding: 0 !important;
+    position: relative;
+}
+.switch-toggle * {
+    -moz-box-sizing: border-box;
+}
+.switch-toggle a {
+    display: block;
+    transition: all 0.3s ease-out 0s;
+}
+.switch-toggle label, .switch-toggle > span {
+    line-height: 30px;
+    vertical-align: middle;
+}
+.switch-toggle input:focus ~ a, .switch-toggle input:focus + label {
+    outline: 1px dotted #888888;
+}
+.switch-toggle input {
+    opacity: 0;
+    position: absolute;
+}
+.switch-toggle input + label {
+    float: left;
+    font-weight: normal;
+    height: 100%;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    width: 75px;
+    z-index: 2;
+}
+.switch-toggle a {
+    height: 99%;
+    left: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+    z-index: 1;
+}
+.switch-toggle input:last-of-type:checked ~ a {
+    left: 50%;
+}
+.switch-candy {
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: #333333;
+    float: left;
+    font-weight: bold;
+    text-align: center;
+}
+.switch-candy label {
+    transition: color 0.2s ease-out 0s;
+}
+.switch-candy input:checked + label {
+}
+.switch-candy a {
+    background-color: #0099CC;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
+    border-radius: 3px 3px 3px 3px;
+}
+.switch-candy > span {
+    color: #333333;
+    text-shadow: none;
+}
+.switch-candy span {
+    color: #FFFFFF;
+}
+.switch-candy.switch-candy-blue a {
+    background-color: #38A3D4;
+}
+.switch-candy.switch-candy-yellow a {
+    background-color: #F5E560;
+}

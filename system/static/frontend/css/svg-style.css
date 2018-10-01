@@ -1,0 +1,90 @@
+.svgZindex {
+	z-index: 1!important;
+}
+.OrRegTrig01 {
+	width: 60px;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+	-webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.OrRegRing01 {
+	width: 180px;
+    position: absolute;
+    float: right;
+    left: -100px;
+    top: 16px;
+}
+.OrRegRing02 {
+	width: 100px;
+    position: absolute;
+    float: right;
+    bottom: 40px;
+    right: -46px;
+	z-index: -1!important;
+}
+.OrRegStar01 {
+	width: 45px;
+    position: absolute;
+    float: right;
+    bottom: -25px;
+    right: -25px;
+}
+.OrRegSlant01 {
+	width: 170px;
+    position: absolute;
+    float: right;
+    left: -170px;
+    top: 10px;
+}
+.OrRegSlant02{
+	width: 136px;
+    position: absolute;
+    float: right;
+    left: -20px;
+    top: 50px;
+	-webkit-transform: translate(-10%,-60%) scaleX(-1);
+    transform: translate(-10%,-60%) scaleX(-1);
+}
+.OrRegPenta01 {
+	width: 70px;
+    position: absolute;
+    float: left;
+    bottom: 250px;
+    left: -200px;
+	-webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.OrRegRinga01{
+	width: 70px;
+    position: absolute;
+    float: right;
+    bottom: 550px;
+    right: -130px;
+    z-index: -1!important;
+}
+.OrRegWave01 {
+	width: 120px;
+    position: absolute;
+    float: left;
+    bottom: 300px;
+    left: -130px;
+    z-index: -1!important;
+}
+.OrRegWave02{
+	width: 100px;
+    position: absolute;
+    float: left;
+    right: -20px;
+    top: -50px;
+    transform: rotate(180deg);
+}
+.OrRegWave03{
+	width: 120px;
+    position: absolute;
+    float: right;
+    right: -160px;
+    bottom: 50px;
+}

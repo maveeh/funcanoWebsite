@@ -1,0 +1,501 @@
+#menu-bar ul {
+  background-color: #eee;
+  margin: 0;
+  padding: 0;
+  display: none;
+  width: 150px;
+  position: absolute;
+  top: 30px;
+  border: solid 1px #B4B4B4; 
+  -webkit-box-shadow: 2px 2px 3px #CFD0D4;
+  -moz-box-shadow: 2px 2px 3px #CFD0D4;
+  box-shadow: 2px 2px 3px #CFD0D4;
+  z-index: 999;
+}
+
+#menu-bar li ul li, #menu-bar .active ul li a{
+    display:block; width: 135px; float:left; color:#000; list-style: none outside none; text-shadow: none; 
+margin:0; position: relative; padding-left: 15px;
+}
+
+#menu-bar ul li:hover a, #menu-bar li:hover li a {
+  background: none;
+  border: none;
+  color: #666;
+  -box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  width: 100%;
+}
+#menu-bar li ul li:hover {
+  background: #DEDEDE !important;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+
+}
+.error_msg {
+	color: #D74600;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 6px;
+	padding: 10px 0;
+	text-align: left;
+	width: 100%;
+	float:left;
+}
+
+.error_login {
+	color: #D74600;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 14px 0 4px;
+	text-align: center;
+	width: 100%;
+	float:left;
+}
+
+.succ_login	{
+	color: #1EA379;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 14px 0 4px;
+	text-align: center;
+	width: 100%;
+	float:left;
+}
+.succ_green	{
+	color: #1EA379;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 6px;
+	padding: 10px 0;
+	text-align: left;
+	width: 100%;
+	float:left;
+}
+
+.boldness{
+	font-weight: bold;
+}
+
+.curpointer {
+    cursor: pointer;
+}
+
+.dataTables_info {
+    float: left;
+    padding: 20px 10px;
+    width: 40%;
+}
+#tbl_courses_previous{background:url(../images/admin-icon-sprite.png) -64px -1121px no-repeat; display:block; height:20px; width:15px;margin-right: 5px;float:left;}
+#tbl_courses_first{background:url(../images/admin-icon-sprite.png) -64px -1078px no-repeat; display:block; height:20px; width:15px;margin-right: 5px;float:left;}
+#tbl_courses_next{background:url(../images/admin-icon-sprite.png) -64px -1164px no-repeat; display:block; height:20px; width:15px;margin-right: 5px;float:left;}
+#tbl_courses_last{background:url(../images/admin-icon-sprite.png) -64px -1204px no-repeat; display:block; height:20px; width:15px;margin-right: 5px;float:left;}
+.popup-form{margin-top:10px; background:#efefef; overflow:hidden; padding:20px;}
+#wrapper-addpage{width:770px; margin:10px auto 15px}
+.formheading{font-weight:bold; color:#666666; text-align:center; min-height:150px; padding: 20px;}
+
+/* for details page*/
+.detailsval{
+font-size:12px; text-align:left; font-weight:normal;"
+}
+.detailshead{
+font-size:12px; text-align:left; padding:10px 40px 10px 0px; vertical-align: top;
+}
+.detailsval p{
+	padding: 7px;
+}
+#wrapper-detailspage{width:670px; margin:10px auto 15px}
+#wrapper-detailspage .edit{width:70px; padding:5px 0 0 30px}
+#wrapper-detailspage .delete{width:70px; padding:5px 0 0 30px}
+
+.addnew{background:url(../images/btn-plus.png) no-repeat; 
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	padding-left: 30px;
+	text-align:left;
+	font-size: 12px;
+}
+.pagetitle{
+	font-size: 20px;
+    font-weight: bold;
+    padding: 5px 0 0;
+}
+
+.notify{
+	background: none repeat scroll 0 0 #59C5FF;
+    border: 1px solid #DADADA;
+    border-radius: 7px 7px 7px 7px;
+    color: #FFFFFF;
+    display: none;
+    font-weight: bold;
+    right: 13%;
+    max-height: 15px;
+    max-width: 500px;
+    overflow: hidden;
+    padding: 10px;
+    position: fixed;
+    z-index: 1000;
+}
+
+.tbl_schedular{
+	border: 1px solid #dadada;
+	width: 1250px;
+}
+
+.tbl_schedular tr td{
+	font-size: 12px;
+	/*width: 200px;*/
+	padding: 10px;
+	border: 1px solid #dadada;
+}
+.tbl_schedular .tbl_header td{
+	font-size: 12px;
+}
+.tbl_schedular tr td.tbl_header{
+	font-size: 12px;
+	text-align: left;
+}
+.schedule_times{
+	margin-top: 10px;
+}
+
+.addtime{
+width: 14px; margin-left: 5px; cursor: pointer;
+}
+.deletetime
+{
+width: 14px; margin-left: 5px; cursor: pointer;
+transform:rotate(45deg); -ms-transform:rotate(45deg); -webkit-transform:rotate(45deg);
+}
+label.ilabel{
+	display:block;
+	font-size:12px;
+	padding-bottom:10px;
+	cursor:pointer;
+	}
+
+label.itoggle,
+label.itoggle span{
+	display: block;
+	width: 93px;
+	height: 27px;
+	margin: 0 auto;
+	background: url(../images/itoggle.png) left bottom no-repeat;
+	cursor:pointer;
+	text-indent:-5000px;
+	}
+label.itoggle.iToff{
+	background-position:right bottom;
+	}
+label.itoggle span{
+	background-position: left top;
+	margin: 0;
+	}
+input.iT_checkbox{
+	position:absolute;
+	top:-9999px;
+	left:-9999px;
+	}
+	
+	.iToff{
+		background-position: 100% -27px;
+	}
+	.iTon{
+		background-position: 0% -27px;
+	}
+.schedule_times input{
+	font-size: 10px;
+}
+/* mealtime resto list*/
+.mealtimeinfo {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 96%;
+}
+.menutitle{
+	font-size: 12px;
+	font-weight: bold;
+}
+.showmenu {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+.restolist {
+    background-color: #FFFFFF;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px 5px 5px 5px;
+    color: #555555;
+    display: inline-block;
+    float: left;
+    font-weight: bold;
+    margin-bottom: 5px;
+    width: 99.8%;
+}
+.resto_title, .resto_title2 {
+    background-color: #CCCCCC;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+}
+.resto_title2 { width: 85%; }
+.setapproval {
+    background-color: #CCCCCC;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 8px 12px;
+    width: 10%;
+}
+.showmp, .showstages{
+	width: 100%;
+}
+/*eof resto list*/
+.enrolledlist{
+	background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    margin: 10px;
+    min-height: 500px;
+    padding: 10px;
+}
+.mealplanlist{
+	width: 20%;
+}
+.merchantlist{
+	width: 73%;
+}
+
+#header1{
+	font-size: 15px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.mpitem{
+	font-size: 12px;
+	padding: 10px 0 10px 10px;
+	border-bottom: 1px dotted #ccc;
+	cursor: pointer;
+}
+
+.reset li .inpwidth{
+	width: 250px;
+}
+
+.frm_item_right{
+	float: left;
+	width: 50%;
+	margin-right: 10px;
+}
+
+.frm_item_left{
+	float: left;
+	width: 40%;
+	margin-right: 10px;
+}
+
+.regiform input[type="radio"], input[type="checkbox"] {
+	font-size: 11px;
+	float: left;
+}
+.regiform .spntitle{
+	font-size: 11px;
+	float: left;
+	margin-left: 5px;
+	margin-right: 15px;
+}
+.iframe_cancel{
+	font-size: 14px; color: #ADD7FE; margin-left: 10px;
+}
+.attachmenuheader{
+	color: #666666; min-height: 150px; padding: 20px; margin-top: 0px; margin-bottom: 70px;
+}
+.separator{
+cursor: default;
+}
+
+.gettime{margin-left:10px; width: 74px;float: left;}
+.mealplanlist ul{margin: 0; padding: 0;}
+.accordion .mcost{float: right; padding: 0 50px 10px 10px;}
+.accordion div .dv1{padding-bottom: 10px; height: auto;width: 520px; border: none medium;}
+.accordion  div .dv2{background-color: #DFDFDF;
+    border: 1px solid #CCCCCC;
+    float: left;
+    padding: 20px;}
+.accordion  div .dv3{float: left; width: 80px; border: none; margin: 0; padding: 0; border: none medium;}
+.accordion  div .dv4{float: left; width: 527px; border: none; margin: 0; padding: 0; border: none medium;}
+.accordion ul{margin: 0; padding: 0 0 0 10px;}
+.frm_mealplanadd{ color: #666666;
+    margin-bottom: 40px;
+    padding: 20px;}
+	
+.regiform #frm_addmember7 .reset{border-bottom: 1px dotted #dadada; padding: 10px 0;}
+.spnhead{width: 250px; display: inline-block;}
+.inpcustom {width: 213px; margin-left: 20px;}
+#frm_addmember6  .reset li .ulmealtime_n_cost{margin: 0px; padding: 0;}
+
+
+.inp_redio{margin-top: 10px;}
+
+.criteria{ 
+	float: left;
+    padding: 5px 0 0 7px;
+}
+.leftcontent{
+	float: left;
+	width: 500px;
+}
+.rightcontent{
+	border: 1px solid #CCCCCC;
+    float: left;
+    margin-top: 75px;
+    padding: 10px;
+    width: 179px;
+	min-height: 600px;
+}
+.width18 {
+    width: 165px;
+}
+.dv_left,.dv_right{
+	float: left;
+	width: 40%;
+	margin-right: 10px;
+}
+.dv_left .dv_info,.dv_right .dv_info{
+	font-weight: normal;
+}
+.dv_title, .dv_left .dv_info,.dv_right .dv_info,.dv_left .dv_title,.dv_right .dv_title{
+	float: left;
+	width: 40%;
+	margin-right: 10px;
+}
+
+.dv_desc,.dv_limitation{
+	float: left;
+	width: 100%;
+}
+.dv_desc .dv_title,.dv_limitation .dv_title{
+	font-weight: bold;
+	width: 15%;
+	float: left;
+}
+
+.dv_desc .dv_info2,.dv_limitation .dv_info2{
+	font-weight: normal;
+	width: 80%;
+	margin-left: 10px;
+	float: left;
+}
+.mealplandetails{
+	line-height: 25px;
+}
+.showmp h3,.showstages h3{
+	background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    color: #444444;
+    cursor: pointer;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    margin: 0;
+    padding: 5px 10px;
+}
+.dv_ing{
+	float: left;
+	width: 8%;
+}
+.dv_ingredients{
+	float: left;
+	width: 90%;
+}
+#dietplan_review{
+	float: left;
+	width: 33%;
+	padding: 10px;
+	
+}	
+#dietplan_info{
+	float: left;
+	width: 60%;
+	padding: 0 2%;
+	border-right: 1px dotted #ccc;
+}
+
+#reviewer_section{
+	width: 100%;
+	padding: 20px 0px;
+	float: left;
+}
+
+#reviewer_section label{
+	width: 100px;
+	display: inline-block;
+}
+.showstages .bg_red,.tbl_listing .bg_red, .bg_red {
+ background: #FF6B44;
+}
+.showstages .bg_pink,.tbl_listing .bg_pink,.bg_pink{
+ background: #FF9ED5;
+}
+.showstages .bg_green,.tbl_listing .bg_green,.bg_green{
+ background: #80D8B3;
+}
+.showstages .bg_yellow,.tbl_listing .bg_yellow,.bg_yellow{
+ background: #FFFF57;
+}
+.allstages{
+	padding: 5px;
+	margin-right: 10px;
+	border: 1px solid #ccc;
+	float: left;
+	width: 100px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.clickablediv{
+	background-color: #fff; 
+	border: 1px solid #DEDEDE; 
+	border-radius: 3px 3px 3px 3px; 
+	height: 20px; 
+	padding: 8px 10px 5px 10px;
+	width: 1100px;
+}
+
+#int_showresult{
+	width: 1100px;
+	
+}
+
+.showmsg{
+	background-color: #fff; 
+	border: 1px solid #DEDEDE; 
+	border-radius: 3px 3px 3px 3px; 
+	margin-left: 30px;
+}
+
+#reply_to_email{
+	display: inline-block;
+    padding: 0 25px 13px 0;
+}
+.msgcontent{
+display:none; width:100%; padding: 0px 10px 0px 10px; margin-top: 10px;
+}
+.replymsg{
+width: 82%; margin: 10px 0px;
+}
+
+.replydate{width: 17%; margin: 20px 0px;}
+.replysub{ width: 100%; margin-bottom: 20px;}
+.showmsg .unread{
+	background-color: #F6F2F2; 
+}
+.hide{
+	display: none;
+}

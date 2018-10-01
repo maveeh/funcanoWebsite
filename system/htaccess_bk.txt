@@ -1,0 +1,17 @@
+<IfModule authz_core_module>
+	#Require all denied
+</IfModule>
+<FilesMatch "\.(gif|jpe?g|png)$">
+#Order allow,deny
+#Allow from all
+</FilesMatch>
+
+<Directory static>
+# All access controls and authentication are disabled
+# in this directory
+Satisfy Any
+Allow from all
+</Directory>
+<IfModule !authz_core_module>
+	#Deny from all
+</IfModule>
