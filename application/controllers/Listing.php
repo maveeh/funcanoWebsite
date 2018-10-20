@@ -106,10 +106,10 @@ class Listing extends CI_Controller {
 		if (!$flyresdata) {
 				redirect(BASEURL);
 		}
-		$interestedData=$this->Common_model->selTableData("fc_interested","*","flyerId='".$flyerId."' AND userId=".$this->session->userdata(PREFIX.'sessUserId'));
+		$isInterested	=	$this->Common_model->getSelectedField("fc_interested","interestId","flyerId='".$flyerId."' AND userId=".$this->session->userdata(PREFIX.'sessUserId'));
 
-		$totalInterested=$this->Common_model->selTableData("fc_interested","COUNT(interestId) as TotalInterest","flyerId='".$flyerId."'");
-	
+		$totalInterested	=	$this->Common_model->selRowData("fc_interested","COUNT(interestId) as TotalInterest","flyerId='".$flyerId."'");
+	// v3print($totalInterested); exit ;
 		$funcies=explode(",",$flyresdata[0]->keywords);
 		
 		if (isset($funcies) && $funcies!="") {
@@ -135,49 +135,55 @@ class Listing extends CI_Controller {
 
 			}
 			/*View Count By Gender*/
-				$userData=$this->Common_model->selRowData("fc_user","gender","userId=".$this->session->userdata(PREFIX.'sessUserId'));
+			$userData=$this->Common_model->selRowData("fc_user","gender","userId=".$this->session->userdata(PREFIX.'sessUserId'));
+	//v3print($userData); exit ;
 				$viewCountIns['flyerId']=$flyerId ;
 				$viewCountIns['date']=date("Y-m-d") ;
 				if ($userData->gender !="") {
 				$viewCountIns['gender']=$userData->gender;
 					
 				}
-		
+			//v3print($viewCountIns); exit ;
 				$insertCount=$this->Common_model->insert("fc_view_count",$viewCountIns);
 				/*view count ends*/
 
 		if (isset($_POST['btnReview'])) {
-		
-				 if (isset($_POST['name'])) {
-				 $insertFlyers["name"]	=$_POST['name']; }
-				 if (isset($_POST['rating'])) {
-				 $insertFlyers["rating"]	=$_POST['rating']; }
-				 if (isset($_POST['description'])) {
-				 $insertFlyers["description"]	=$_POST['description']; }
-				 if (isset($_POST['flyerId'])) {
-				 $insertFlyers["flyerId"]	=$_POST['flyerId']; }
-				 if (isset($_POST['userId'])) {
-				 $insertFlyers["userId"]	=$_POST['userId']; }
+			//v3print($_POST);exit ;
+			 if (isset($_POST['name'])) {
+			 $insertFlyers["name"]	=$_POST['name']; }
+			 if (isset($_POST['rating'])) {
+			 $insertFlyers["rating"]	=$_POST['rating']; }
+			 if (isset($_POST['description'])) {
+			 $insertFlyers["description"]	=$_POST['description']; }
+			 if (isset($_POST['flyerId'])) {
+			 $insertFlyers["flyerId"]	=$_POST['flyerId']; }
+			 if (isset($_POST['userId'])) {
+			 $insertFlyers["userId"]	=$_POST['userId']; }
 
-				 $insertFlyers["date"]	=date("Y-m-d");
+			 $insertFlyers["date"]	=date("Y-m-d");
 		 
-			$update=$this->Common_model->insert("fc_flyers_review",$insertFlyers);
-		     if ($update) {
-		     	redirect(BASEURL."/listing/details/".$insertFlyers["flyerId"]);
-		     }
+
+		
+		 	
+			 $update=$this->Common_model->insert("fc_flyers_review", $insertFlyers);
+			 if ($update) {
+				redirect(BASEURL."/listing/details/".$insertFlyers["flyerId"]);
+			 }
 				
 		}
-			if (isset($_POST['btnBuy'])) {
-				$quantity=$_POST['txt_ticketQuantity'] ;
-				redirect(BASEURL."/ticket/buy/".$flyerId."/".$quantity);
-		
-			}
+		if (isset($_POST['btnBuy'])) {
+			$quantity=$_POST['txt_ticketQuantity'] ;
+			redirect(BASEURL."/ticket/buy/".$flyerId."/".$quantity);
+		//$total=$quantity*$flyresdata->ticketPrice ;
+			//v3print($_POST); exit ;
+		}
 
+		//v3print($totalInterested->TotalInterest); exit ;
+		$this->outputData['flyresdata']		=	$flyresdata[0] ;
+		$this->outputData['reviewData']		=	$reviewData;
+		$this->outputData['isInterested']	=	$isInterested;
+		$this->outputData['totalInterested']=	$totalInterested;
 		
-		$this->outputData['flyresdata']=$flyresdata[0] ;
-		$this->outputData['reviewData']=$reviewData;
-		$this->outputData['interestedData']=$interestedData[0];
-		$this->outputData['totalInterested']=$totalInterested[0];
 		$this->load->viewF("listings_single_page_view",$this->outputData);
 	}
 

@@ -35,7 +35,7 @@ class Listing extends CI_Controller {
 		 if (isset($_POST['txt_zip'])) 	
 		 $flyersArr["zip"]	=$_POST['txt_zip'];	
 		 if (isset($_POST['txt_phone'])) 
-		 $flyersArr["zip"]	=$_POST['txt_zip'];	
+		 $flyersArr["phone"]	=$_POST['txt_zip'];	
 		 if (isset($_POST['txt_address'])) 	
 		 $flyersArr["address"]	=ucfirst($_POST['txt_address']);	
 		 if (isset($_POST['txt_website'])) 	
@@ -201,7 +201,7 @@ class Listing extends CI_Controller {
 	public function active_ticket(){
 
         $ticketData=$this->Common_model->exeQuery("SELECT `fc_ticket_booking`.*,fc_flyers.title,fc_flyers.image,fc_flyers.address,fc_user.emailId,fc_user.firstName FROM `fc_ticket_booking` LEFT JOIN `fc_flyers` ON `fc_ticket_booking`.`flylerId`=`fc_flyers`.`flyerId` LEFT JOIN fc_user ON `fc_ticket_booking`.`userId`=`fc_user`.`userId` WHERE fc_ticket_booking.userId = ".$this->session->userdata(PREFIX.'sessUserId')." AND ticketDate >= DATE_FORMAT(NOW(),'%Y-%m-%d') AND `bookingStatus` = 1");
-        //echo $this->db->last_query(); exit;
+        
 		$this->outputData['ticketData']=$ticketData ;
 		$this->outputData['status']="Active";
 		$this->outputData['page']="Active";
@@ -223,7 +223,7 @@ class Listing extends CI_Controller {
 	public function canceled_ticket(){
 
         $ticketData=$this->Common_model->exeQuery("SELECT `fc_ticket_booking`.*,fc_flyers.title,fc_flyers.image,fc_flyers.address,fc_user.emailId,fc_user.firstName FROM `fc_ticket_booking` LEFT JOIN `fc_flyers` ON `fc_ticket_booking`.`flylerId`=`fc_flyers`.`flyerId` LEFT JOIN fc_user ON `fc_ticket_booking`.`userId`=`fc_user`.`userId` WHERE fc_ticket_booking.userId = ".$this->session->userdata(PREFIX.'sessUserId')." AND  `bookingStatus` = 2");
-
+       
 		$this->outputData['ticketData']=$ticketData ;
 		$this->outputData['status']="Cancel";
 		$this->outputData['page']="Cancel";

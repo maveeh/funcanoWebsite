@@ -95,11 +95,18 @@ class Home extends CI_Controller {
 	    $flyer= $this->Common_model->selTableData("fc_flyer_category","categoryTitle","");
 	    $flyerData= $this->Common_model->selTableData("fc_flyers","*","status=1","flyerId DESC","0","9");
 	 
-		$this->outputData['flyerData']=$flyerData;
+
+	   
+
+	    $this->outputData['flyerData']=$flyerData;
 	    $this->outputData['flyer']=$flyer;
 	    $this->outputData['page']=$page;
 		$this->load->viewF('home_view',$this->outputData);
 
+	}
+
+	public function user_registration() {
+		echo "test";
 	}
 	
 	//Contact page

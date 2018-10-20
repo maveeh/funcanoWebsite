@@ -103,45 +103,51 @@
 							<div class="col-md-6">
 								<div class="card-label">
 									<label for="nameOnCard">Name on Card</label>
-									<input id="nameOnCard" name="nameOnCard"  placeholder="ICICI" value="ICICI" required type="text">
+									<input id="nameOnCard" name="nameOnCard"  placeholder="Name On Card" value="" required type="text">
 								</div>
 							</div>
 
 							<div class="col-md-6">
 								<div class="card-label">
 									<label for="cardNumber">Card Number</label>
-									<input id="cardNumber" name="cardNumber" placeholder="1234  5678  9876  5432" value="1234  5678  9876  5432" required type="text">
+									<input id="cardNumber" name="cardNumber" placeholder="Enter Card Number" value="" required type="text">
 								</div>
 							</div>
 
 							<div class="col-md-4">
 								<div class="card-label">
-									<label for="expirynDate">Expiry Month</label>
-									<input id="expiryDate"  placeholder="01" value="01" required type="text">
+									<label for="expiryData">Expiry Month</label>
+									<input id="expiryData" name="expiryDate"  placeholder="Expire Month" value="" required type="text">
 								</div>
 							</div>
 
 							<div class="col-md-4">
 								<div class="card-label">
-									<label for="expiryDate">Expiry Year</label>
-									<input id="expirynDate"  placeholder="2018" value="2018" required type="text">
+									<label for="expiryYear">Expiry Year</label>
+									<input id="expiryYear" name="expiryYear" placeholder="Expire Year" value="" required type="text">
 								</div>
 							</div>
 
 							<div class="col-md-4">
 								<div class="card-label">
 									<label for="cvv">CVV</label>
-									<input id="cvv" placeholder="5478" value="5478" required type="text">
+									<input id="cvv" name="cvv" placeholder="" value="" required type="text">
 								</div>
 							</div>
 
 						</div>
 					</div>
 				</div>
+				<?php if (isset($error)) {
+				?>
+			<mark><?php echo $error; ?></mark>
+				
 
+				
+		<?php 	} ?>
 			</div>
 			<!-- Payment Methods Accordion / End -->
-		
+
 			<button name="btnConfirmTicket" class="submit button margin-left-40 margin-top-40">Confirm and Pay</button>
 		</div>
 
@@ -153,7 +159,7 @@
 			<!-- Booking Summary -->
 			<div class="listing-item-container compact order-summary-widget">
 				<div class="listing-item">
-					<img src="<?php echo UPLOADPATH."/flyers/".$flyresdata->image ;?>" alt="">
+					<img src="<?php if($flyresdata->image!="" && file_exists(ABSUPLOADPATH."/flyers/".$flyresdata->image)){ echo UPLOADPATH."/flyers/".$flyresdata->image; }else{ echo UPLOADPATH."/default-flyer.png" ; } ?>" alt="">
 
 					<div class="listing-item-content">
 					<!-- 	<div class="numerical-rating" data-rating="5.0"></div> -->

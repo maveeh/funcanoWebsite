@@ -313,10 +313,12 @@ WHERE mg.magazine_id =1*/
         $query		=	$this->db->get($tablename);		
 		
 		if($query && $query->num_rows())
-		{
-			foreach($query->result() as $row)
+		{	$row = $query->result_array();
+			
+			foreach($row[0]  as $key => $value)
 			{
-				return $row->$field;	
+				//v3print($value); exit;
+				return $value;	
 			}
 		}
 		else

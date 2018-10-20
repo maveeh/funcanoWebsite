@@ -293,22 +293,22 @@
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
 			<?php if ($this->session->userdata(PREFIX.'sessUserId')>0) { 
-				if ($interestedData=="") {
+				if ($isInterested > 0) {
 					
 				?>	
+			
+			<button type="button" class="button book-now fullwidth margin-top-5"><i class="sl sl-icon-check"></i> Interested In</button>
+		<?php } else{ ?> <!-- <div class="verified-badge">
+				<i class="sl sl-icon-check"></i> Interested In
+			</div> -->
 			<a href="<?php echo BASEURL."/listing/interested/".$this->session->userdata(PREFIX.'sessUserId')."/".$flyresdata->flyerId; ?>">
 			<!--  <div class="verified-badge" style="cursor:pointer;">
 				 I Am Interested
 			</div> -->
 			<button type="button" class="button book-now fullwidth margin-top-5">I Am Interested</button>
 			
-
-		<?php } else{ ?> <!-- <div class="verified-badge">
-				<i class="sl sl-icon-check"></i> Interested In
-			</div> -->
-			<button type="button" class="button book-now fullwidth margin-top-5"><i class="sl sl-icon-check"></i> Interested In</button>
 			
-			  <?php } if($totalInterested->TotalInterest > 0 ) { ?>
+			  <?php } if($totalInterested->TotalInterest> 0 ) { ?>
 		<div class="text-center"><?php echo $totalInterested->TotalInterest;  ?> People Interested <!-- in this place --></div>
 		<?php }	} ?>
 		<!-- Contact -->

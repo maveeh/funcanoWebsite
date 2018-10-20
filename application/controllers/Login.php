@@ -87,11 +87,34 @@ class Login extends CI_Controller {
 				$insertData["emailId"]	=	trim(strtolower($_POST["email2"]));
 				$insertData["password"]	=	md5(trim($_POST["password1"]));
 			    $insertData["funcies"]	=   $topRatedFuncies[0]->funcyName ;
+				/*if ($_POST["txt_keyword"]!="") {
+					$insertData["funcies"]	=	implode(",",$_POST["txt_keyword"]);
+				}else{
+					
+					 $insertData["funcies"]	=$topRatedFuncies[0]->funcyName ;
+				}*/
 				
+				/*$insertData["contactNumber"]	=	$_POST["txt_contactNumber"];
+				$insertData["altContactNumber"]	=	$_POST["txt_altContactNumber"];
+				//$insertData["password"]	=	$_POST["txt_password"];
+				$insertData["city"]	=	$_POST["txt_city"];
+				$insertData["status"]	=	$_POST["txt_status"];
+				$insertData["address"]	=	$_POST["txtarea_address"];
+				$insertData["zipcode"]	=	$_POST["txt_zipcode"];	*/
 				$insertedUserId					=	$this->Common_model->insert(PREFIX."user",$insertData);
 			
 			if($insertedUserId){
-				
+				/*//send email URL to registered 
+				$settings = array();
+				$settings["template"] 				=  "welcome_to_funcano.html";
+				$settings["email"] 					=  trim($insertData['emailId']); 
+				$settings["subject"] 				=  "Warm welcome from the Funcano";
+				$contentarr['[[[NAME]]]']			=	trim($insertData["firstName"]);
+				$contentarr['[[[USERNAME]]]']		=	$insertData["emailId"];
+				$contentarr['[[[PASSWORD]]]']		=	$insertData["password"];
+				//$contentarr['[[[DASHURL]]]']		=	BASEURL.'/login';
+				$settings["contentarr"] 	= 	$contentarr;
+				$this->common_lib->sendMail($settings);*/
 				//insert into hr_verification
 				$insertVeri['userId']		=	$insertedUserId;
 				$insertVeri['verifyType']	=	1;

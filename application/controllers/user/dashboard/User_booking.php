@@ -31,7 +31,7 @@ if (isset($_POST['btnSearch'])) {
 		 }
 
 	$flyersData=$this->Common_model->joinTableData("fc_ticket_booking","fc_flyers","*","fc_flyers.flyerId=fc_ticket_booking.flylerId",$con);
- 
+ //echo $this->db->last_query(); exit ;
 	$this->outputData['page']="User_booking";
 	$this->outputData['flyersData']=$flyersData;
 	$this->outputData['allFleyrs']=$allFleyrs;

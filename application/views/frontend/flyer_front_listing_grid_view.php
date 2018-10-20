@@ -107,7 +107,7 @@ button.button.height-Sidebar {
 						  }  ?></h4>
 					</div>
 				</div>
-				<?php  if ($flyersData!="") {
+				<?php  // if ($flyersData!="") {
 					 ?>
 				<div class="col-md-6">
 					
@@ -209,7 +209,7 @@ button.button.height-Sidebar {
 
 					</div>
 				</div>
-				<?php } ?>
+				<?php //} ?>
 
 			</div>
 			<!-- Sorting - Filtering Section / End -->
@@ -223,12 +223,12 @@ button.button.height-Sidebar {
 					}else{ echo "#sign-in-dialog" ; } ?> -->
 
 				<div class="col-lg-4 col-md-6">
-					<?php if ($this->session->userdata(PREFIX.'sessUserId')>0) { ?>
+					<?php if ($this->session->userdata(PREFIX.'sessUserId')>0 ) { ?>
 					<a href="<?php echo BASEURL."/listing/details/".$flyersData->flyerId ?>"  class="listing-item-container compact">
 						<?php }else{ ?>  <a href="#sign-in-dialog" onclick="signButtonDisplay() ;" class="sign-in popup-with-zoom-anim listing-item-container compact">  <?php  } ?>
 						<div class="listing-item">
 
-							<img src="<?php if($flyersData->image!=""){ echo UPLOADPATH."/flyers/".$flyersData->image; }else{ echo UPLOADPATH."/default-flyer.png" ; } ?>" alt="Flyers Image">
+							<img src="<?php if($flyersData->image!="" && file_exists(ABSUPLOADPATH."/flyers/".$flyersData->image)){ echo UPLOADPATH."/flyers/".$flyersData->image; }else{ echo UPLOADPATH."/default-flyer.png" ; } ?>" alt="Flyers Image">
 							
 							<!-- <img src="<?php echo UPLOADPATH."/flyers/".$flyersData->image ;?>" alt=""> -->
 

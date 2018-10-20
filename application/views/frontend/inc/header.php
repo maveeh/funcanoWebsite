@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <head>
 <title>Funcano</title>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127035799-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-127035799-1');
+</script>
+
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -14,12 +26,12 @@
 	 ?>
 	
 
-	  <meta property="og:url"           content="<?php echo BASEURL."/listing/details/".$flyresdata->flyerId; ?>" />
-	  <meta property="og:type"          content="website" />
-	  <meta property="og:title"         content="<?php  echo $flyresdata->title ; ?>" />
-	  <meta property="og:description"   content="<?php echo $flyresdata->description; ?>" />
-	  <meta property="og:image"         content="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" />
-	<meta name="twitter:card" content=".....">
+  <meta property="og:url"           content="<?php echo BASEURL."/listing/details/".$flyresdata->flyerId; ?>" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="<?php  echo $flyresdata->title ; ?>" />
+  <meta property="og:description"   content="<?php echo $flyresdata->description; ?>" />
+  <meta property="og:image"         content="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" />
+   <meta name="twitter:card" content=".....">
 	<meta name="twitter:site" content="....">
 	<meta name="twitter:creator" content=".....">
 	<meta name="twitter:url" content="<?php echo BASEURL."/listing/details/".$flyresdata->flyerId; ?>" />
@@ -283,6 +295,8 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
 		});
   }
 </script>
+
+
 </head>
 <body>
 <div id="wrapper">
@@ -551,7 +565,7 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
 			
               </form>
             </div>
-			<div id="afterRegister" style="display: none;" class="notification success ">
+			<div id="afterRegister" style="display: none;" class="notification success">
 				<p><h4>Successful!</h4><span>Verification mail has been sent to your email-id.</span></p>
 				<a class="close"></a>
 			</div>

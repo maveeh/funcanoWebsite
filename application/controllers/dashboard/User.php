@@ -76,13 +76,20 @@ class User extends CI_Controller {
 
 			
 			$flyerData		=	$this->Common_model->selTableData(PREFIX."flyers","",$cond);
-			foreach ($flyerData as $flyerData) {
+
+			//v3print($flyerData); exit ;
+			if ($flyerData !="") {
+				foreach ($flyerData as $flyerData) {
+				
 				$cond=array();
 				$cond['flyerId']=$flyerData->flyerId ;
 				$updateData["status"]	=	3;
-		 	$this->Common_model->update(PREFIX."flyers",$updateData,$cond);
+		 		$this->Common_model->update(PREFIX."flyers",$updateData,$cond);
 
 			}
+			
+			}
+			
 
 			//echo $this->db->last_query(); exit ;
 			redirect(DASHURL."/User");

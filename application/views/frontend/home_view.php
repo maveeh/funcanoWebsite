@@ -84,7 +84,7 @@
             
               <div class="listing-item">
 
-                <img src="<?php if($flyerData->image!=""){ echo UPLOADPATH."/flyers/".$flyerData->image; }else{ echo UPLOADPATH."/default-flyer.png" ; } ?>" alt="Flyers Image">
+                <img src="<?php if($flyerData->image!="" && file_exists(ABSUPLOADPATH."/flyers/".$flyerData->image)){ echo UPLOADPATH."/flyers/".$flyerData->image; }else{ echo UPLOADPATH."/default-flyer.png" ; } ?>" alt="Flyers Image">
 
              <!--  <img src="<?php  echo UPLOADPATH."/flyers/".$flyerData->image ;?>" alt="Flyers Image"> -->
 

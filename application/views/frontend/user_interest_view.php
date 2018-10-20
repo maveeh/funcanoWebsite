@@ -25,7 +25,7 @@
 		<div class="row">
 			
 			<!-- Listings -->
-			<div class="col-lg-12 col-md-12">
+			<div class="col-lg-10 col-md-10">
 				<div class="dashboard-list-box margin-top-0">
 				
 				<?php if (valResultSet($interestedIn)) {
