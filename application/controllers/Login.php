@@ -2,7 +2,49 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
+	
+	//verify user account
+	//parth/funcano/login/reset-password/lkjsafdlkk34kdfklsk
 
+	
+	function reset_password($code=""){
+		$cond = "verifyType = 2 AND status = 0 AND code = '".$code."'";
+		$result		=	$this->Common_model->selRowData(PREFIX."verification", '' ,$cond);
+		
+		if($result){
+			if(isset($_POST["btnSubmit"])){
+
+			   $userData=$this->Common_model->selRowData(PREFIX."user","*","userId = ".$result->userId);
+			
+		        $updateData	=	array();
+
+  				$updateData['password'] = md5(trim($_POST["txt_password"]));  
+	
+				 $update=$this->Common_model->update("fc_user",$updateData,"userId=".$result->userId);
+				
+				if($update) {
+					$updateData				=	array();
+					$updateData['status']	=	1;
+					$cond					= 	"verifyId = ".$result->verifyId;
+					$update_fl				=	$this->Common_model->update(PREFIX."verification",$updateData,$cond);
+					//echo $this->db->last_query();
+
+				}
+				$this->common_lib->setSessMsg("New password has been set successfully", 5);
+			}
+			$this->load->viewF('resetPassword');
+		} else {
+			$this->load->viewF('linkExpired');
+		}	
+	}	
+
+	
+	function link_expired(){
+
+		$this->load->viewF('linkExpired');
+		
+	}
+	
 	//Registration & login using Google Connect
 	public function googleReg(){
 
@@ -86,7 +128,7 @@ class Login extends CI_Controller {
 				$insertData["lastName"]	=	ucfirst($_POST["lastName"]);
 				$insertData["emailId"]	=	trim(strtolower($_POST["email2"]));
 				$insertData["password"]	=	md5(trim($_POST["password1"]));
-			    $insertData["funcies"]	=   $topRatedFuncies[0]->funcyName ;
+			   // $insertData["funcies"]	=   $topRatedFuncies[0]->funcyName ;
 				/*if ($_POST["txt_keyword"]!="") {
 					$insertData["funcies"]	=	implode(",",$_POST["txt_keyword"]);
 				}else{
@@ -152,6 +194,7 @@ class Login extends CI_Controller {
 				$this->session->set_userdata(PREFIX.'sessUserName', $userData->firstName);
 				$this->session->set_userdata(PREFIX.'sessUserEmail', $userData->emailId);
 				$outputData['result']	=	 "Success";
+				
 			}else {
 				$outputData['result']	=	 "Failed";
 			}
@@ -166,6 +209,48 @@ class Login extends CI_Controller {
 			$this->session->unset_userdata(PREFIX.'sessEmail');
 		}
 		redirect(BASEURL);
+	}
+
+  
+  public function forgot_password(){
+		
+  		if (isset($_POST['forgotPassword'])) {
+  		
+  				$userData=$this->Common_model->selRowData(PREFIX."user","*","emailId='".$_POST['email']."'  AND status = 1");
+
+  				$userArr=array();
+  				if ($userData) {
+					$insertData	=	array();
+  					$insertData["verifyType"]	 =	2; //Reset password
+  					$insertData["code"]	 		 =	generateStrongPassword(16,false,'lud'); 			
+					$insertData["userId"]	 	 =  $userData->userId;
+					
+					$this->Common_model->insert(PREFIX."verification",$insertData);
+
+					$this->common_lib->setSessMsg("Email has been sent", 5);
+					// Send password changed notification mail
+					$settings = array();
+					$settings["template"] 				=   "forgot_password.html";
+					$settings["email"] 					=   $userData->emailId;
+					$settings["[[[CODE]]]"] 			=   BASEURL."/login/reset_password/".$insertData["code"];					
+					$settings["subject"] 				=   "Funcano - Forgot Password";						
+					$settings["contentarr"] 			= 	$settings;
+					$this->common_lib->sendMail($settings);	
+  					
+  					
+  				}else{
+
+
+					$this->common_lib->setSessMsg("Enter correct email-id", 4);
+
+  				}
+
+
+
+  		}
+
+  		$this->load->viewF("forgotPassword");
+
 	}
 
 

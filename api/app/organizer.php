@@ -5,7 +5,7 @@ $app->post('/orgRegistration', function ($request, $response, $args) {
 	$db = new Common_model;
 	
 	$allPostVars = $request->getParsedBody();
-
+	//echo $allPostVars['emailId'];
 	if (isset($allPostVars['orgEmail'])){
 		
 		$insertArr['orgFirstName'] 			= $allPostVars['orgFirstName'];
@@ -19,7 +19,7 @@ $app->post('/orgRegistration', function ($request, $response, $args) {
 		}
 		
 		$result = $db->selTable("fc_organizer","organizerId","orgEmail='".$allPostVars['orgEmail']."'");
-	
+		//print_r($result);exit;
 		if ($result){
 			echo json_encode((object)array("status" => false,"message"=>"Email-Id already exist"));
 		} else {
@@ -38,7 +38,7 @@ $app->post('/orgRegistration', function ($request, $response, $args) {
 								 }
 					}
 		}
-
+		//$db->insertOrUpdate("tims_user", $insertArr);	
 	} else {
 		echo json_encode((object)array("status" => false,"message"=>"Something went wrong"));
 
@@ -51,7 +51,7 @@ $app->post('/orgRegistration', function ($request, $response, $args) {
 $app->post('/orgProfileEdit', function ($request, $response, $args) {
 	// Load query common model
 		$db = new Common_model;
-
+	//echo "123" ;exit();
 	//POST or PUT
 
 	$allPostVars = $request->getParsedBody();
@@ -90,7 +90,7 @@ $app->post('/orgProfileEdit', function ($request, $response, $args) {
 $app->post('/orgForgotPassword', function ($request, $response, $args) {
 	// Load query common model
 		$db = new Common_model;
-
+	//echo "123" ;exit();
 	//POST or PUT
 	$allPostVars = $request->getParsedBody();
 
@@ -130,7 +130,7 @@ $app->post('/orgUploadimage', function ($request, $response, $args) use ($app) {
 		  {
 			 if(move_uploaded_file($f_tmp,$store )){
 			
-	
+		   // $query="insert into av_blog set photo='$name1'";
 
 			echo json_encode((object)array("status" => true,"message"=>"uploaded succesfully"));
 		} 

@@ -143,7 +143,7 @@ class Ticket extends CI_Controller {
 				$settings["email"] 					= 	$insPayment['emailId']; //
 				$settings["subject"] 				=	"Funcano - Ticket Booking";	
 				$contentarr['[[[TITLE]]]']			=	$flyresdata[0]->title;
-				$contentarr['[[[TICKETNUMBER]]]']			=	$updateBillNumber["ticketNumber"];
+				$contentarr['[[[TICKETNUMBER]]]']	=	$updateBillNumber["ticketNumber"];
 				$contentarr['[[[DATE]]]']			=	trim($insPayment["bookingTime"]);
 				$contentarr['[[[ADDRESS]]]']		=	$flyresdata[0]->flyerAddress;
 				$settings["contentarr"] 			= 	$contentarr;

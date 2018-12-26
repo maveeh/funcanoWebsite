@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <head>
 <title>Funcano</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-signin-client_id" content="1074998700634-j0et73k89oir98ark6g73f6kg42up6sf.apps.googleusercontent.com">
+<link rel="stylesheet" href="<?php echo FRONTCSS."/css/style.css"?>">
+<link rel="stylesheet" href="<?php echo FRONTCSS."/css/lighweight-popup.css"?>">
+<link rel="stylesheet" href="<?php echo FRONTCSS."/css/colors/main.css"?>" id="colors">
+<link rel="stylesheet" href="<?php echo FRONTCSS."/css/svg-style.css"?>" id="colors">
+<link rel="shortcut icon" href="<?php echo FRONTIMG."/images/favicon.ico"; ?>" />
+
+<?php if (isset($flyresdata->flyerId)) { ?>
+	<meta property="og:url"           content="<?php echo BASEURL."/listing/details/".$flyresdata->flyerId; ?>" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="<?php  echo $flyresdata->title ; ?>" />
+	<meta property="og:description"   content="<?php echo $flyresdata->description; ?>" />
+	<meta property="og:image"         content="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" />
+	<meta name="twitter:card" content=".....">
+	<meta name="twitter:site" content="....">
+	<meta name="twitter:creator" content=".....">
+	<meta name="twitter:url" content="<?php echo BASEURL."/listing/details/".$flyresdata->flyerId; ?>" />
+	<meta name="twitter:title" content="<?php  echo $flyresdata->title ; ?>">
+	<meta name="twitter:description" content="<?php echo $flyresdata->description; ?>">
+	<meta name="twitter:image" content="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>">
+	<meta name="twitter:image:alt" content="....">
+<?php } ?>
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127035799-1"></script>
@@ -11,39 +36,8 @@
 
   gtag('config', 'UA-127035799-1');
 </script>
-
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-<meta name="google-signin-client_id" content="1074998700634-j0et73k89oir98ark6g73f6kg42up6sf.apps.googleusercontent.com">
-
-<link rel="stylesheet" href="<?php echo FRONTCSS."/css/style.css"?>">
-<link rel="stylesheet" href="<?php echo FRONTCSS."/css/colors/main.css"?>" id="colors">
-<link rel="stylesheet" href="<?php echo FRONTCSS."/css/svg-style.css"?>" id="colors">
-
-<?php if (isset($flyresdata->flyerId)) {
-	 ?>
-	
-
-  <meta property="og:url"           content="<?php echo BASEURL."/listing/details/".$flyresdata->flyerId; ?>" />
-  <meta property="og:type"          content="website" />
-  <meta property="og:title"         content="<?php  echo $flyresdata->title ; ?>" />
-  <meta property="og:description"   content="<?php echo $flyresdata->description; ?>" />
-  <meta property="og:image"         content="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" />
-   <meta name="twitter:card" content=".....">
-	<meta name="twitter:site" content="....">
-	<meta name="twitter:creator" content=".....">
-	<meta name="twitter:url" content="<?php echo BASEURL."/listing/details/".$flyresdata->flyerId; ?>" />
-	<meta name="twitter:title" content="<?php  echo $flyresdata->title ; ?>">
-	<meta name="twitter:description" content="<?php echo $flyresdata->description; ?>">
-	<meta name="twitter:image" content="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>">
-	<meta name="twitter:image:alt" content="....">
-
-
-
-  <?php } ?>
-  <style type="text/css">
+<?php if(! ($this->session->userdata(PREFIX.'sessUserId') > 0 )){ ?>
+<style type="text/css">
 #FacebookRegBtn, #FacebookLoginBtn {
   display: inline-block;
   background: #3B6CD3;
@@ -238,6 +232,7 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
   var startApp = function() {
     gapi.load('auth2', function(){
       // Retrieve the singleton for the GoogleAuth library and set up the client.
+	  // Google API Project name: Funcano1 
       auth2 = gapi.auth2.init({
         client_id: '1074998700634-j0et73k89oir98ark6g73f6kg42up6sf.apps.googleusercontent.com',
         cookiepolicy: 'single_host_origin',
@@ -259,7 +254,7 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
 				   { email:profile.getEmail() }, 
 				  function(data) {
 				   if(data == "Success") {
-					 window.setTimeout(function(){location.reload()},500);
+					 window.setTimeout(function(){window.location.href = '<?php echo base_url();?>';},500);
 				   } else if(data == "Failed") {
 					 $('#loginError').show();
 					// window.stop();
@@ -295,8 +290,7 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
 		});
   }
 </script>
-
-
+<?php } ?>
 </head>
 <body>
 <div id="wrapper">
@@ -371,7 +365,7 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
       <div class="right-side">
         <div class="header-widget">
           <a href="#sign-in-dialog" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</a>
-          <!-- <a href="<?php echo BASEURL."/listing/listing-add" ?>" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a> -->
+           <a href="#sign-in-dialog1" id="signUpAnch" onclick=signUpForm(); class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"> </i> Register</a> 
         </div>
       </div>
       <!-- Right Side Content / End -->
@@ -382,39 +376,37 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
         <div id="beforRegister" class="small-dialog-header">
           <h3>Sign In</h3>
         </div>
-         <div id="registerButton" style="display:none ;" class="small-dialog-header">
-          <h3>Register</h3>
-        </div>
-		
+        
+    
         <!--Tabs -->
         <div id="sign-in-form"  class="sign-in-form style-1">
-			
-          <ul id="ulMenu" class="tabs-nav">
+      
+          <!-- <ul id="ulMenu" class="tabs-nav">
             <li class=""><a href="#tab1" onclick="DisplaySignIn() ;" >Sign In</a></li>
-            <li><a href="#tab2" onclick="DisplayRegister() ;" >Register</a></li>
-          </ul>
+         
+          </ul> -->
 
           <div class="tabs-container alt">
-			
+      
             <!-- Login -->
             <div class="tab-content" id="tab1" style="display: none;">
-			<div class="row">
-			 <div class="col-md-6">
-					<!--<div class="g-signin2" data-onsuccess="onSignIn" onclick="letsRegisterMe()" data-width="150" data-height="30" data-longtitle="true"></div>-->
-					<!-- In the callback, you would hide the gSignInWrapper element on a
-					  successful sign in -->
-					  <div id="gSignInWrapper">
-						<div id="GoogleLoginBtn" class="customGPlusSignIn">
-							<i class="fa fa-google" aria-hidden="true"></i>
-							<span class="buttonText">Google Sign In</span>
-						</div>
-					  </div>
-					  <script>startApp();</script>
-			 </div>
-			 <div class="col-md-6">
-				<div id="FacebookLoginBtn"><a style="width:150px"><i class="fa fa-facebook"></i> Facebook Sign In</a></div>
-			 </div>
-			 </div>
+      <div class="row">
+       <div class="col-md-6">
+          <!--<div class="g-signin2" data-onsuccess="onSignIn" onclick="letsRegisterMe()" data-width="150" data-height="30" data-longtitle="true"></div>-->
+          <!-- In the callback, you would hide the gSignInWrapper element on a
+            successful sign in -->
+            <div id="gSignInWrapper">
+            <div id="GoogleLoginBtn" class="customGPlusSignIn">
+              <i class="fa fa-google" aria-hidden="true"></i>
+              <span class="buttonText">Google Sign In</span>
+            </div>
+            </div>
+            <script>startApp();</script>
+       </div>
+       <div class="col-md-6">
+        <div id="FacebookLoginBtn"><a style="width:150px"><i class="fa fa-facebook"></i> Facebook Sign In</a></div>
+       </div>
+       </div>
               <form method="post" id="userLogin" class="login">
                 <h4><mark id="loginError" style="display: none;" >Login details are incorrect</mark></h4>
                 <p class="form-row form-row-wide">
@@ -449,44 +441,73 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
                   <div class="checkboxes margin-top-10">
                     <input id="remember-me" type="checkbox" name="check">
                     <label for="remember-me">Remember Me</label>
+                      <a class="margin-left-90" href="<?php echo BASEURL."/login/forgot-password" ?>">Forgot Password ?</a>
                   </div>
                 </div>
-                <svg class="OrRegStar01" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 50" role="img" aria-label="Triangle"><defs><linearGradient id="e40c0ad1-dfb5-4a57-9775-f2ecf8697aa4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#00dcaf"></stop></linearGradient></defs><path d="M50.3,17.6l-15.5-2.3l-7-14.2c-0.7-1.5-2.9-1.5-3.6,0l-7,14.2L1.7,17.6c-1.6,0.2-2.3,2.2-1.1,3.4l11.3,11L9.2,47.7	c-0.3,1.6,1.4,2.9,2.9,2.1L26,42.4l13.9,7.4c1.5,0.8,3.2-0.5,2.9-2.1L40.2,32l11.2-11C52.6,19.8,51.9,17.8,50.3,17.6z M36.6,29.9	c-0.5,0.5-0.7,1.1-0.6,1.8l2.1,12.6l-11.2-6c-0.6-0.3-1.3-0.3-1.9,0l-11.2,6L16,31.7c0.1-0.6-0.1-1.3-0.6-1.8l-9.1-9l12.6-1.8	c0.7-0.1,1.2-0.5,1.5-1.1L26,6.5L31.6,18c0.3,0.6,0.9,1,1.5,1.1L45.7,21L36.6,29.9z" fill="url(#e40c0ad1-dfb5-4a57-9775-f2ecf8697aa4)"></path></svg>
+                <svg class="OrRegStar01" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 50" role="img" aria-label="Triangle"><defs><linearGradient id="e40c0ad1-dfb5-4a57-9775-f2ecf8697aa4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#00dcaf"></stop></linearGradient></defs><path d="M50.3,17.6l-15.5-2.3l-7-14.2c-0.7-1.5-2.9-1.5-3.6,0l-7,14.2L1.7,17.6c-1.6,0.2-2.3,2.2-1.1,3.4l11.3,11L9.2,47.7  c-0.3,1.6,1.4,2.9,2.9,2.1L26,42.4l13.9,7.4c1.5,0.8,3.2-0.5,2.9-2.1L40.2,32l11.2-11C52.6,19.8,51.9,17.8,50.3,17.6z M36.6,29.9  c-0.5,0.5-0.7,1.1-0.6,1.8l2.1,12.6l-11.2-6c-0.6-0.3-1.3-0.3-1.9,0l-11.2,6L16,31.7c0.1-0.6-0.1-1.3-0.6-1.8l-9.1-9l12.6-1.8 c0.7-0.1,1.2-0.5,1.5-1.1L26,6.5L31.6,18c0.3,0.6,0.9,1,1.5,1.1L45.7,21L36.6,29.9z" fill="url(#e40c0ad1-dfb5-4a57-9775-f2ecf8697aa4)"></path></svg>
               </form>
             </div>
 
+          
+        </div>
+      </div>
+    
+  </div>
+  
+    <!-- Sign In Popup / End -->
+
+
+      <!-- Sign In Popup -->
+      <div id="sign-in-dialog1" class="zoom-anim-dialog mfp-hide">
+
+       
+        <div id="beforRegister" class="small-dialog-header">
+          <h3>Register</h3>
+        </div>
+    
+        <!--Tabs -->
+        <div id="sign-in-form"  class="sign-in-form style-1">
+      
+          <ul id="ulMenu" class="tabs-nav">
+          
+            <li><a href="#tab2" onclick="DisplayRegister() ;" style="
+    display: none;" ></a></li>
+          </ul>
+
+          <div class="tabs-container alt">
+
             <!-- Register -->
             <div class="tab-content" id="tab2" style="display: none;">
-				<div id="afterSocialRegister" style="display: none;" class="notification success ">
-					<p><h4>Congratulations!</h4><span>You are successfully Registered. Welcome mail has been sent to your email-id.</span></p>
-				</div>
-				<div id="dvsignForm">
+        <div id="afterSocialRegister" style="display: none;" class="notification success ">
+          <p><h4>Congratulations!</h4><span>You are successfully Registered. Welcome mail has been sent to your email-id.</span></p>
+        </div>
+        <div id="dvsignForm">
               <form method="post" id="userRegistration"  onsubmit="return checkForm(this);" class="register">
-			  <svg class="OrRegWave02" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 24" role="img" aria-label="Squiggle"><defs><linearGradient id="41b8dd5d-be97-4cda-9418-dc18846731f7" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#f93d66"></stop></linearGradient></defs><path d="M114 22c0 1.1-.9 2-2 2-3.2 0-5.8-1.3-8-3.8-1.6-1.7-2.6-3.4-4.7-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.8-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.7-7.3C7.5 6.1 5.5 4 2 4 .9 4 0 3.1 0 2s.9-2 2-2c3.2 0 5.8 1.3 8 3.8 1.6 1.7 2.6 3.4 4.7 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C40.2 1.3 42.8 0 46 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C84.2 1.3 86.8 0 90 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 1.1-.1 2 .8 2 1.9z" fill="url(#41b8dd5d-be97-4cda-9418-dc18846731f7)"></path></svg>
+        <svg class="OrRegWave02" tabindex="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 114 24" role="img" aria-label="Squiggle"><defs><linearGradient id="41b8dd5d-be97-4cda-9418-dc18846731f7" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#6d47d9"></stop><stop offset="100%" stop-color="#f93d66"></stop></linearGradient></defs><path d="M114 22c0 1.1-.9 2-2 2-3.2 0-5.8-1.3-8-3.8-1.6-1.7-2.6-3.4-4.7-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.8-7.3-3.8-6.8-5.7-9-9.2-9-3.5 0-5.5 2.1-9.2 9-2.1 3.9-3.2 5.5-4.8 7.3-2.2 2.5-4.8 3.8-8 3.8s-5.8-1.3-8-3.8c-1.6-1.7-2.6-3.4-4.7-7.3C7.5 6.1 5.5 4 2 4 .9 4 0 3.1 0 2s.9-2 2-2c3.2 0 5.8 1.3 8 3.8 1.6 1.7 2.6 3.4 4.7 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C40.2 1.3 42.8 0 46 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 3.5 0 5.5-2.1 9.2-9 2.2-3.9 3.2-5.5 4.8-7.3C84.2 1.3 86.8 0 90 0s5.8 1.3 8 3.8c1.6 1.7 2.6 3.4 4.8 7.3 3.8 6.9 5.7 9 9.2 9 1.1-.1 2 .8 2 1.9z" fill="url(#41b8dd5d-be97-4cda-9418-dc18846731f7)"></path></svg>
               <h4><mark id="emailExist" style="display: none;" >Email Already Exist</mark></h4>
              <div class="row">
-			 <div class="col-md-6">
-					<!--<div class="g-signin2" data-onsuccess="onSignIn" onclick="letsRegisterMe()" data-width="150" data-height="30" data-longtitle="true"></div>-->
-					<!-- In the callback, you would hide the gSignInWrapper element on a
-					  successful sign in -->
-					  <div id="gSignUpWrapper">
-						<div id="GoogleBtn" class="customGPlusSignIn">
-							<i class="fa fa-google" aria-hidden="true"></i>
-							<span class="buttonText">Google Sign Up</span>
-						</div>
-					  </div>
-					  <script>startApp();</script>
-			 </div>
-			 <div class="col-md-6">
-				<!--
-				<div class="fb-login-button" data-width="10" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
-								<fb:login-button scope="public_profile,email" id="FacebookRegBtn" onlogin="checkLoginState();">Facebook SignUp</fb:login-button>
-				<fb:login-button size="large" onlogin="Log.info('onlogin callback')">Facebook SingUp</fb:login-button>-->
-				<div id="FacebookRegBtn"><a class="fb-connect" style="width:150px"><i class="fa fa-facebook"></i> Facebook Sign Up</a></div>
-			 </div>
-			 </div> 
-			 <div class="row">
-			 <div class="col-md-6">
+       <div class="col-md-6">
+          <!--<div class="g-signin2" data-onsuccess="onSignIn" onclick="letsRegisterMe()" data-width="150" data-height="30" data-longtitle="true"></div>-->
+          <!-- In the callback, you would hide the gSignInWrapper element on a
+            successful sign in -->
+            <div id="gSignUpWrapper">
+            <div id="GoogleBtn" class="customGPlusSignIn">
+              <i class="fa fa-google" aria-hidden="true"></i>
+              <span class="buttonText">Google Sign Up</span>
+            </div>
+            </div>
+            <script>startApp();</script>
+       </div>
+       <div class="col-md-6">
+        <!--
+        <div class="fb-login-button" data-width="10" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                <fb:login-button scope="public_profile,email" id="FacebookRegBtn" onlogin="checkLoginState();">Facebook SignUp</fb:login-button>
+        <fb:login-button size="large" onlogin="Log.info('onlogin callback')">Facebook SingUp</fb:login-button>-->
+        <div id="FacebookRegBtn"><a class="fb-connect" style="width:150px"><i class="fa fa-facebook"></i> Facebook Sign Up</a></div>
+       </div>
+       </div> 
+       <div class="row">
+       <div class="col-md-6">
                <p class="form-row form-row-wide">
                 <label for="firstName">First Name:
                   <i class="im im-icon-Male"></i>
@@ -536,7 +557,7 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
               <p class="form-row form-row-wide">
                 <label for="password1">Password:
                   <i class="im im-icon-Lock-2"></i>
-                  <input class="input-text" type="password1" name="password1" id="password1"   require  />
+                  <input class="input-text" type="password1" name="password1" id="password1"   required/>
 
                 </label>
                 <!-- <meter max="4" id="password-strength-meter"></meter>
@@ -554,30 +575,37 @@ document.getElementById('FacebookLoginBtn').addEventListener('click', function()
                   <mark id="correctPassword" style="display: none;" >Password does not match</mark>
 
               </p>
-			<div class="form-row">
+      <div class="form-row">
                <input type="button" onclick="userForm();" class="button border fw margin-top-10" name="userRegister" value="Register" />  
 
-               <!-- <button type="submit" onclick="userForm();" class="button border fw margin-top-10" name="userRegister" value="Register" />Register</button> -->
+              
 
-              <!-- <button type="submit" onclick="userLogin();" name="login"  class="button border margin-top-15" value="Login" />Login</button> -->
-
-			</div>
-			
+      </div>
+      
               </form>
             </div>
-			<div id="afterRegister" style="display: none;" class="notification success">
-				<p><h4>Successful!</h4><span>Verification mail has been sent to your email-id.</span></p>
-				<a class="close"></a>
-			</div>
-			
+      <div id="afterRegister" style="display: none;" class="notification success">
+        <p><h4>Successful!</h4><span>Verification mail has been sent to your email-id.</span></p>
+        <a class="close"></a>
+      </div>
+      
           </div>
         </div>
       </div>
-	  
-	</div>
-	
-	  <!-- Sign In Popup / End -->
+    
+  </div>
+  
+    <!-- Sign In Popup / End -->
 <?php } ?>
+<!-- Alert box 
+	<div id="platform-alert-box" class="zoom-anim-dialog mfp-hide">
+		<div class="alert-box-header">
+		  <h4>Message</h4>
+		</div>
+			<div id="dvReplaceMessage" style="background: white; padding: 20px; display: inline-block; border-radius: 0px 0px 3px 3px;"><h4>Congratulations!</h4><span>You are successfully Registered. Welcome mail has been sent to your email-id.</span></div>
+	
+	</div>
+<!-- -->
 <?php if($this->session->userdata(PREFIX.'sessUserId') > 0 ){ 
 $userdata= $this->Common_model->selRowData("fc_user","","userId=".$this->session->userdata(PREFIX.'sessUserId')); ?>
  <!-- After Login /start -->
@@ -596,7 +624,7 @@ $userdata= $this->Common_model->selRowData("fc_user","","userId=".$this->session
                <li><a href="<?php echo BASEURL."/user/dashboard/listing/active_ticket" ?>"><i class="fa fa-ticket"></i> Ticket Booking</a></li>
                <li><a href="<?php echo BASEURL."/user/dashboard/interested-in" ?>" ><i class="sl sl-icon-badge"></i> Interested In</a></li>
              <!--  <li><a href="<?php echo BASEURL."/user/dashboard/change-password" ?>"><i class="sl sl-icon-lock"></i> Change Password</a></li> -->
-              <li><a href="<?php echo BASEURL."/login/logout" ?>" onclick="javascript:return confirm('Are You Sure ! You Want To Logout.');"><i class="sl sl-icon-power"></i> Logout</a></li>
+              <li><a href="#<?php //echo BASEURL."/login/logout" ?>" id="askConfirm"><i class="sl sl-icon-power"></i> Logout</a></li>
               
               </ul>
           </div>
@@ -644,13 +672,18 @@ $userdata= $this->Common_model->selRowData("fc_user","","userId=".$this->session
  
   else{
     var userData = $("#userRegistration").serialize();
-          $.post("<?php echo base_url();?>/login/registration",
+
+   // alert(userData) ; exit ;
+          $.post("<?php echo BASEURL ;?>/Login/registration",
           userData, 
           function(data) {
 			   if(data == "Success")
 			   {
+
+          //alert("done") ; exit ;
 				 $('#dvsignForm').hide();
 				 $('#afterRegister').show();
+         
 			   } else if(data == "Failed"){
 				 $('#emailExist').show();
 			   }
@@ -659,7 +692,16 @@ $userdata= $this->Common_model->selRowData("fc_user","","userId=".$this->session
           }
 	}
  
+</script>
 
-   </script>
+
+<script type="text/javascript">
+
+ function signUpForm(){
+
+   $('#dvsignForm').show();
+    $('#afterRegister').hide();
+ }
+</script>
 
 </header>

@@ -11,83 +11,78 @@ class Listing extends CI_Controller {
 	public function index(){
 	
 		$page="Flyers";
-		  $flyer= $this->Common_model->selTableData("fc_flyer_category","categoryTitle","");
+		$flyer= $this->Common_model->selTableData("fc_flyer_category","categoryTitle","");
 
-		  if ($this->session->userdata(PREFIX.'sessUserId')>0) {
-		  	 $userData= $this->Common_model->selRowData("fc_user","funcies","userId=".$this->session->userdata(PREFIX.'sessUserId'));
-		  	 $funcies=explode(",", $userData->funcies);
-		  	 $this->outputData['funcies']=$funcies ;
-		  
-			 }
-	
+		if($this->session->userdata(PREFIX.'sessUserId')>0) {
+		 $userData= $this->Common_model->selRowData("fc_user","funcies","userId=".$this->session->userdata(PREFIX.'sessUserId'));
+		 $funcies=explode(",", $userData->funcies);
+		 $this->outputData['funcies']=$funcies ;
+	  
+		 }
 
-			if (isset($_GET['lookingFor'])) { 
-				$cond="status=1 AND (categoryTitle LIKE '%".$_GET['lookingFor']."%' OR  address LIKE '%".$_GET['lookingFor']."%' OR title LIKE '%".$_GET['lookingFor']."%' OR keywords LIKE '%".$_GET['lookingFor']."%' OR city LIKE '%".$_GET['lookingFor']."%' OR state LIKE '%".$_GET['lookingFor']."%'  OR description LIKE '%".$_GET['lookingFor']."%' )" ;
-			}else{
-				$cond="status=1" ;
+
+		if (isset($_GET['lookingFor'])) { 
+			$cond="status=1 AND (categoryTitle LIKE '%".$_GET['lookingFor']."%' OR  address LIKE '%".$_GET['lookingFor']."%' OR title LIKE '%".$_GET['lookingFor']."%' OR keywords LIKE '%".$_GET['lookingFor']."%' OR city LIKE '%".$_GET['lookingFor']."%' OR state LIKE '%".$_GET['lookingFor']."%'  OR description LIKE '%".$_GET['lookingFor']."%' )" ;
+		}else{
+			$cond="status=1" ;
+		}
+
+		if (isset($_GET['categories'])) {
+			$cond="status=1 AND (categoryTitle LIKE '%".$_GET['categories']."%')" ;
+		}
+
+		$flyersData=$this->Common_model->selTableData("fc_flyers","*,(SELECT SUM(rating) FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS rating,,(SELECT count(reviewId) FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS reviews",$cond,"flyerId DESC");
+
+		$topRatedFuncies= $this->Common_model->selTableData("fc_flyers","GROUP_CONCAT(DISTINCT keywords) AS funcyName",$cond,"");
+
+		if (isset($_POST['btnFilter'])) {
+		 // v3print($_POST); exit ;
+			$funcies="";
+			if (isset($_POST['funcies'])) {
+			$postedFuncies=$_POST['funcies'] ;
+				   $funciesViews=0;
+				   $conds =array() ;
+					foreach ($postedFuncies as $postedFuncies) {
+						$funciesData=$this->Common_model->selRowData("fc_funcies","","funciesName='".$postedFuncies."'");
+						$funciesViews=1+$funciesData->viewCount;
+						$funciesDataArr['viewCount']=$funciesViews ;
+						$update=$this->Common_model->update("fc_funcies",$funciesDataArr,"funciesName='".$postedFuncies."'");
+
+						$conds[] = "keywords LIKE '%".$postedFuncies."%'";
+
+					}
+			$funcies=" AND ".implode(" AND ",$conds) ;	
 			}
-
-			if (isset($_GET['categories'])) {
-				$cond="status=1 AND (categoryTitle LIKE '%".$_GET['categories']."%')" ;
-			}
-
-
-
-			$flyersData=$this->Common_model->selTableData("fc_flyers","*,(SELECT SUM(rating) FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS rating,,(SELECT count(reviewId) FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS reviews",$cond,"flyerId DESC");
-
-		
-			$topRatedFuncies= $this->Common_model->selTableData("fc_flyers","GROUP_CONCAT(DISTINCT keywords) AS funcyName",$cond,"");
-		
-
-			if (isset($_POST['btnFilter'])) {
 			
-				$funcies="";
-				if (isset($_POST['funcies'])) {
-				$postedFuncies=$_POST['funcies'] ;
-					   $funciesViews=0;
-						foreach ($postedFuncies as $postedFuncies) {
-							$funciesData=$this->Common_model->selRowData("fc_funcies","","funciesName='".$postedFuncies."'");
-						 	$funciesViews=1+$funciesData->viewCount;
-							$funciesDataArr['viewCount']=$funciesViews ;
-							$update=$this->Common_model->update("fc_funcies",$funciesDataArr,"funciesName='".$postedFuncies."'");
-
-						}
-				$funcies=implode(",", $_POST['funcies']) ;	
-				}
-				
-				$order="";
-				if ($_POST['sort']=="Newest Flyer") {
-					$order="flyerId DESC";
-				}else if ($_POST['sort']=="Oldest Flyer") {
-						$order="flyerId ASC";
-				}else if ($_POST['sort']=="Highest Rated") {
-						$order="rating DESC";
-				}else if ($_POST['sort']=="Most Viewed") {
-						$order="viewCount DESC";
-				}else{
-					$order="1";
-				}
-				if (isset($_GET['categories'])) {
-				$cond2="status=1 AND keywords LIKE '%".$funcies."%' AND (categoryTitle LIKE '%".$_GET['categories']."%')" ;
-				}else{
-					$cond2="status=1 AND keywords LIKE '%".$funcies."%' AND (categoryTitle LIKE '%".$_POST['lookFor']."%' OR  address LIKE '%".$_POST['lookFor']."%' OR title LIKE '%".$_POST['lookFor']."%' OR keywords LIKE '%".$_POST['lookFor']."%' OR city LIKE '%".$_POST['lookFor']."%' OR state LIKE '%".$_POST['lookFor']."%'  OR description LIKE '%".$_POST['lookFor']."%' )" ;
-				}
-
-				$flyersData=$this->Common_model->selTableData("fc_flyers","*,(SELECT count(reviewId) FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS reviews,(SELECT SUM(rating)/reviews FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS rating",$cond2,$order);
-
-					$topRatedFuncies= $this->Common_model->selTableData("fc_flyers","GROUP_CONCAT(keywords) AS funcyName",$cond,"viewCount DESC","5");
-
-
-
-				
+			$order="";
+			if ($_POST['sort']=="Newest Flyer") {
+				$order="flyerId DESC";
+			}else if ($_POST['sort']=="Oldest Flyer") {
+					$order="flyerId ASC";
+			}else if ($_POST['sort']=="Highest Rated") {
+					$order="rating DESC";
+			}else if ($_POST['sort']=="Most Viewed") {
+					$order="viewCount DESC";
+			}else{
+				$order="1";
 			}
+			if (isset($_GET['categories'])) {
+			$cond2="status=1 ".$funcies." AND (categoryTitle LIKE '%".$_GET['categories']."%')" ;
+			} else {
+				$cond2="status=1  ".$funcies." AND (categoryTitle LIKE '%".$_POST['lookFor']."%' OR  address LIKE '%".$_POST['lookFor']."%' OR title LIKE '%".$_POST['lookFor']."%' OR keywords LIKE '%".$_POST['lookFor']."%' OR city LIKE '%".$_POST['lookFor']."%' OR state LIKE '%".$_POST['lookFor']."%'  OR description LIKE '%".$_POST['lookFor']."%' )" ;
+			}
+
+			$flyersData=$this->Common_model->selTableData("fc_flyers","*,(SELECT count(reviewId) FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS reviews,(SELECT SUM(rating)/reviews FROM fc_flyers_review WHERE flyerId=`fc_flyers`.`flyerId`) AS rating",$cond2,$order);
+
+			//echo $this->db->last_query(); exit ;
+			$topRatedFuncies= $this->Common_model->selTableData("fc_flyers","GROUP_CONCAT(keywords) AS funcyName",$cond,"viewCount DESC","5");				
+		}
 		$topFuncies= array_values(array_unique(explode(",",$topRatedFuncies[0]->funcyName))) ;
 		
 		$this->outputData['flyersData']=$flyersData ;
 		$this->outputData['flyer']=$flyer ;
 		$this->outputData['page']=$page ;
-		$this->outputData['topFuncies']=$topFuncies ;
-	
+		$this->outputData['topFuncies']=$topFuncies;
 		
 		$this->load->viewF("flyer_front_listing_grid_view",$this->outputData);
 
@@ -136,15 +131,20 @@ class Listing extends CI_Controller {
 			}
 			/*View Count By Gender*/
 			$userData=$this->Common_model->selRowData("fc_user","gender","userId=".$this->session->userdata(PREFIX.'sessUserId'));
+			$alreadyViewData=$this->Common_model->selRowData("fc_view_count","*","userId=".$this->session->userdata(PREFIX.'sessUserId')." AND flyerId=".$flyerId);
 	//v3print($userData); exit ;
+			if (!$alreadyViewData) {
 				$viewCountIns['flyerId']=$flyerId ;
 				$viewCountIns['date']=date("Y-m-d") ;
+				$viewCountIns['userId']=$this->session->userdata(PREFIX.'sessUserId');
 				if ($userData->gender !="") {
 				$viewCountIns['gender']=$userData->gender;
 					
 				}
 			//v3print($viewCountIns); exit ;
 				$insertCount=$this->Common_model->insert("fc_view_count",$viewCountIns);
+			}
+				
 				/*view count ends*/
 
 		if (isset($_POST['btnReview'])) {

@@ -27,17 +27,20 @@
       <!-- Profile -->
       <div class="col-lg-1 col-md-12"></div>
       <div class="col-lg-10 col-md-12">
+
         <form method="post" enctype="multipart/form-data" onsubmit="return postcodeValidate();">
+
+
         <div class="dashboard-list-box margin-top-0">
           <h4 class="gray">Profile Details</h4>
           <div class="dashboard-list-box-static">
             
             <!-- Avatar -->
             <div class="edit-profile-photo">
-              <img src="<?php if ($userData->profileImage != "") {
-				
-					echo $userData->profileImage ;
-				
+              <img id="myImage" src="<?php if ($userData->profileImage != "") {
+        
+          echo $userData->profileImage ;
+        
               } else {
                  echo UPLOADPATH."/dummy-profile.png";
               } ?>" alt="">
@@ -115,8 +118,10 @@
               </div>
               <div class="col-md-6">
                <label>Postcode</label>
-              <input name="txt_zip" value="<?php echo $userData->zipcode; ?>" type="text" id="postcode" required> <!-- <span id="mydiv"></span> --> 
+              <input name="txt_zip" value="<?php echo $userData->zipcode; ?>" type="text" id="postcode" required> 
+              <span id="mydiv"></span>  
                <!-- <mark id="mydiv"></mark> -->
+
              </div>
               <div class="col-md-6">
                <label>Address</label>
@@ -132,7 +137,7 @@
              </div>
 
                 <div class="text-center">
-            <button type="submit" name="btnUpdateUser" onclick="postcodeValidate();" class="button margin-top-15">Update</button>
+            <button type="submit" name="btnUpdateUser" onclick="postcodeValidate();" class="button margin-top-15">Update</button>  
           </div>
             </div>
   
@@ -149,19 +154,50 @@
 
   <?php $this->load->viewF("inc/footerDashboard"); ?>
 
-  <!--<script type="text/javascript">
+ <script type="text/javascript">
+
     function postcodeValidate() {
         var postcode = document.getElementById("postcode").value;
        
         /*if (password != confirmPassword) {*/
-        if (/^\d{6,10}$/.test(postcode)) {
+        if (/^\d{5,10}$/.test(postcode)) {
            /* document.getElementById('mydiv').innerHTML = '<p style="color:#227d05;"></p>';*/
             return true;
-        } else{ document.getElementById('mydiv').innerHTML = '<p style="color:#e80c0c;">Enter atleast six digit</p>'; }
+        } else{ document.getElementById('mydiv').innerHTML = '<p style="color:#e80c0c;">Enter atleast five digit</p>'; }
         return false;
     }
-</script>-->
 
+    /*function postcodeValidate() {
+        var postcode = document.getElementById("postcode").value;
+       
+        
+        if (/^\d{5,10}$/.test(postcode)) {
+            document.getElementById('mydiv').innerHTML = '<p style="color:#227d05;"></p>';
+            return true;
+        } else{ document.getElementById('mydiv').innerHTML = '<p style="color:#e80c0c;">Enter atleast five digit</p>'; }
+        return false;
+    }*/
+
+</script>
+
+<script type="text/javascript">
+
+$(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
+
+function imageIsLoaded(e) {
+    $('#myImage').attr('src', e.target.result);
+};
+
+
+</script>
   
 
 

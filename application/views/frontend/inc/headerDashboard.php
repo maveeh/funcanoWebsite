@@ -13,6 +13,8 @@
 ================================================== -->
 <link rel="stylesheet" href="<?php echo FRONTCSS."/css/style.css"?>">
 <link rel="stylesheet" href="<?php echo FRONTCSS."/css/colors/main.css"?>" id="colors">
+<link rel="stylesheet" href="<?php echo FRONTCSS."/css/lighweight-popup.css"?>">
+<link rel="shortcut icon" href="<?php echo FRONTIMG."/images/favicon.ico"; ?>" />
 
 </head>
 
@@ -112,7 +114,8 @@ $userdata= $this->Common_model->selRowData("fc_user","","userId=".$this->session
                 <li><a href="<?php echo BASEURL."/user/dashboard/listing/active_ticket" ?>"><i class="fa fa-ticket"></i> Ticket Booking</a></li>
                <li><a href="<?php echo BASEURL."/user/dashboard/interested-in" ?>" ><i class="sl sl-icon-badge"></i> Interested In</a></li>
              <!--  <li><a href="<?php echo BASEURL."/user/dashboard/change-password" ?>"><i class="sl sl-icon-lock"></i> Change Password</a></li> -->
-              <li><a href="<?php echo BASEURL."/login/logout" ?>" onclick="javascript:return confirm('Are You Sure ! You Want To Logout.');"><i class="sl sl-icon-power"></i> Logout</a></li>
+              <!-- <li><a href="<?php echo BASEURL."/login/logout" ?>" onclick="javascript:return confirm('Are You Sure ! You Want To Logout.');"><i class="sl sl-icon-power"></i> Logout</a></li>  -->
+              <li><a href="#<?php //echo BASEURL."/login/logout" ?>" id="askConfirm"><i class="sl sl-icon-power"></i> Logout</a></li>
             </ul>
 					</div>
 

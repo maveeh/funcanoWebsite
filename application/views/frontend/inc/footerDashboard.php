@@ -33,7 +33,27 @@
 <script type="text/javascript" src="<?php echo FRONTJS."/scripts/jquery-ui.min.js"?>"></script>
 <script type="text/javascript" src="<?php echo FRONTJS."/scripts/tooltips.min.js"?>"></script>
 <script type="text/javascript" src="<?php echo FRONTJS."/scripts/custom.js"?>"></script>
+<script type="text/javascript" src="<?php echo FRONTJS."/scripts/lighweightPopup.min.js"?>"></script>
 
+
+<script>
+$(document).ready(function() {
+        $("#askConfirm").click(function(){ ymz.jq_confirm({title:"Confirm", text:"Funcano account will be logout", no_btn:"Cancel", yes_btn:"Confirm", no_fn:function(){return false; }, yes_fn:function(){window.location = '<?php echo BASEURL."/login/logout" ?>'; }}); });
+        
+        $("#toast_success").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "success", sec: 3}); });
+        $("#toast_error").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "error", sec: 3}); });
+        $("#toast_notice").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "notice", sec: 3}); });
+        $("#toast_warning").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "warning", sec: 3}); });
+        
+        $("#loading").click(function(){ ymz.jq_loading.show({text:"Loading", is_cover: 0}); });
+        $("#loading_close").click(function(){ ymz.jq_loading.hide(); });
+        
+        $("#alert1").click(function(){ ymz.jq_alert({title:"Alert", text:"Upload Max 4 Photos", ok_btn:"Okey", close_fn:null}); });
+        
+        
+        
+});
+</script>
 
 <!-- Opening hours added via JS (this is only for demo purpose) -->
 <script>

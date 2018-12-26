@@ -33,7 +33,7 @@
 			<div class="booking-confirmation-page">
 				<i class="fa fa-check-circle"></i>
 				<h2 class="margin-top-30">Thanks for Booking!</h2>
-				<p>Ticket details has been sent your registered email-id<!--  at <a href="" class="__cf_email__">[email&#160;protected] --></a></p>
+				<p>Ticket details has been sent your registered email address.<!--  at <a href="" class="__cf_email__">[email&#160;protected] --></a></p>
 				<!-- <a href="<?php echo BASEURL."/ticket/detail-ticket/".$bookedFlyreData->userId."/".$bookedFlyreData->flylerId; ?>" class="button margin-top-30">View Invoice</a> -->
 			</div>
 

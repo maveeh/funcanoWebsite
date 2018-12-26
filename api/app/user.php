@@ -22,7 +22,7 @@ $app->post('/registration', function ($request, $response, $args) {
 		}
 					
 		$result = $db->selTable("fc_user","userId","emailId='".$allPostVars['emailId']."'");
-	
+		//print_r($result);exit;
 		if ($result){
 
 
@@ -59,10 +59,11 @@ $app->post('/registration', function ($request, $response, $args) {
 $app->post('/signIn', function ($request, $response, $args) {
 	// Load query common model
 		$db = new Common_model;
-
+	//echo "123" ;exit();
 	//POST or PUT
 	$allPostVars = $request->getParsedBody();
-	
+	/*$emailId=mysql_real_escape_string($allPostVars['emailId']);
+		echo $emailId; exit ;*/
 	if(isset($allPostVars['emailId']) && isset($allPostVars['password'])) {
 
 
@@ -75,7 +76,13 @@ $app->post('/signIn', function ($request, $response, $args) {
 
         }else{ 
 
+        	/*$orgResult = $db->selTable("fc_organizer","*","orgEmail='".$allPostVars['emailId']."' AND password='".$allPostVars['password']."'");
         	
+			if ($orgResult) {
+					$orgResult[0]['profileImage']=UPLOADPATH.'/organizerProfile/'.$orgResult[0]['profileImage'];
+				echo json_encode((object)array("status" => true,"loginType"=>2 ,"message"=>"Organizer login successfully" ,"OrgData" => $orgResult));
+			}else {
+			}*/
 			echo json_encode((object)array("status" => false,"message"=>"Invalid login details"));
 			
 		}
@@ -93,28 +100,42 @@ $app->post('/profileEdit', function ($request, $response, $args) {
 	
 	if (isset($allPostVars['userId'])) {
 	
-		if (isset($allPostVars['firstName'])){
-			$updateArr['firstName'] 			= $allPostVars['firstName'];}
-			if (isset($allPostVars['lastName'])){
-			$updateArr['lastName'] 			= $allPostVars['lastName'];}
-		if (isset($allPostVars['city'])){
-			$updateArr['city'] 			= $allPostVars['city'];}
+			if (isset($_POST['firstName'])) 
+			$updateUser["firstName"]	=ucfirst($_POST['firstName']);
+			if (isset($_POST['lastName'])) 
+			$updateUser["lastName"]	=ucfirst($_POST['lastName']);
+			if (isset($_POST['funcies']) && $_POST['funcies']!="") {
+			 $updateUser["funcies"]	=$_POST['funcies'];
+			}else {
+				 $updateUser["funcies"]	="";
+			}
 
-		if (isset($allPostVars['address'])){
-			$updateArr['address'] 			= $allPostVars['address'];}
-		if (isset($allPostVars['zipcode'])){
-			$updateArr['zipcode'] 			= $allPostVars['zipcode'];}
-		if (isset($allPostVars['funcies'])){
-			$updateArr['funcies'] 			= $allPostVars['funcies'];}
-		if (isset($allPostVars['gender'])){
-			$updateArr['gender'] 			= $allPostVars['gender'];}
-		if (isset($allPostVars['profileImageName'])) {
-			$imgname=$allPostVars['profileImageName'];
-			$updateArr['profileImage'] 			=$imgname;
-		}
-		if (isset($allPostVars['contactNumber'])){
-			$updateArr['contactNumber'] 			= $allPostVars['contactNumber'];}
-			
+			if (isset($_POST['contactNumber'])) 	
+			$updateUser["contactNumber"]	=$_POST['contactNumber'];
+			if (isset($_POST['altContactNumber'])) 	
+			$updateUser["altContactNumber"]	=$_POST['altContactNumber'];
+			if (isset($_POST['city'])) 	
+			$updateUser["city"]	=$_POST['city'];
+			if (isset($_POST['address'])) 	
+			$updateUser["address"]	=$_POST['address'];
+			if (isset($_POST['zipcode'])) 	
+			$updateUser["zipcode"]	=$_POST['zipcode'];
+			if (isset($_POST['gender'])) 	
+			$updateUser["gender"]	=$_POST['gender'];
+			if (isset($_POST['description'])) 	
+			$updateUser["description"]	=$_POST['description'];
+		
+			if (isset($_POST['twitterLink'])) 		
+			$updateUser["twitterLink"]	=$_POST['twitterLink'];	
+			if (isset($_POST['facebookLink'])) 
+			$updateUser["facebookLink"]	=$_POST['facebookLink'];
+			if (isset($_POST['googleLink'])) 	
+			$updateUser["googleLink"]	=$_POST['googleLink'];
+
+			if (isset($allPostVars['profileImageName'])) {
+				$imgname=$allPostVars['profileImageName'];
+				$updateArr['profileImage'] 			=$imgname;
+			}
 
 		$result=$db->update("fc_user",$updateArr,"userId=".$allPostVars['userId']);
 		//print_r($result); exit ;
@@ -141,7 +162,8 @@ $app->post('/profileEdit', function ($request, $response, $args) {
 $app->post('/updatePassword', function ($request, $response, $args) {
 	// Load query common model
 		$db = new Common_model;
-	
+	//echo "123" ;exit();
+	//POST or PUT
 
 
 	$allPostVars = $request->getParsedBody();
@@ -173,7 +195,8 @@ $app->post('/updatePassword', function ($request, $response, $args) {
 $app->post('/forgotPassword', function ($request, $response, $args) {
 	// Load query common model
 		$db = new Common_model;
-	
+	//echo "123" ;exit();
+	//POST or PUT
 	$allPostVars = $request->getParsedBody();
 
 if (isset($allPostVars['emailId'])) {
@@ -202,7 +225,8 @@ if (isset($allPostVars['emailId'])) {
 $app->post('/userProfile', function ($request, $response, $args) {
 	// Load query common model
 		$db = new Common_model;
-	
+	//echo "123" ;exit();
+	//POST or PUT
 	$allPostVars = $request->getParsedBody();
 
 if (isset($allPostVars['userId'])) {

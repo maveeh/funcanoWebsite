@@ -3759,7 +3759,10 @@ a.dashboard-responsive-nav-trigger {
     padding: 9px;
     margin-bottom: -4px
 }
-
+.show-all.button {
+    padding: 14px;
+    top: -8px
+}
 @media(max-width:991px) {
     .payment-tab.payment-tab-active {
         max-height: 800px
@@ -4662,8 +4665,8 @@ a.send-message-to-owner.button {
 
 .listing-desc-headline {
     font-size: 22px;
-    margin-bottom: 25px;
-    margin-top: 45px;
+    margin-bottom: 20px;
+    margin-top: 15px;
     display: block
 }
 
@@ -7992,6 +7995,30 @@ body .notification strong {
 .sign-in-form .tabs-nav li.active a {
     color: #66676b
 }
+#platform-alert-box {
+	max-width: 400px;
+    position: fixed;
+    right: 35%;
+    top: 30%;
+}
+
+#platform-alert-box .dvReplaceMessage{
+    background: white;
+    padding: 20px;
+	display: inline-block;
+    border-radius: 0px 0px 3px 3px;
+}
+.alert-box-header {
+	font-size: 18px;
+    position: relative;
+    width: 100%;
+    top: 0;
+    display: inline-block;
+    background-color: #f6f6f6;
+    padding:10px 20px;
+    margin-bottom: 0px;
+	border-radius: 3px 3px 0px 0px;
+}
 
 .lost_password a {
     margin: 0;
@@ -9645,7 +9672,8 @@ section.fullwidth .listing-item-container.list-layout {
     text-align: center;
     line-height: 26px;
     height: 26px;
-    width: 53px;
+    width: auto;
+	padding: 0px 5px;
     /*font-family: open sans;*/
     border-radius: 50px;
     letter-spacing: -.5px;
@@ -10151,8 +10179,9 @@ header.fullwidth.dashboard .container {
 #dashboard .copyrights {
     padding: 40px 0;
     margin: 0;
+	font-size:12px;
     display: block;
-    text-align: left;
+    text-align: center;
     border: 0
 }
 
@@ -11176,7 +11205,7 @@ a.close-list-item {
     position: relative;
     font-weight: 500;
     margin: 0;
-    line-height: 27px
+	padding-bottom: 18px;
 }
 
 .list-box-listing-content .inner span {
@@ -11308,14 +11337,14 @@ input:checked+.slider:before {
     border-radius: 4px;
     background-color: #fff;
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, .06);
-    padding: 0 40px 25px
+    padding: 25px 40px;
 }
 
 .add-listing-headline {
     width: calc(100% + 80px);
     left: -40px;
     position: relative;
-    padding: 30px 40px;
+    padding: 20px 30px;
     margin: 0 0 30px;
     border-radius: 4px 4px 0 0;
     background-color: #fcfcfc;
@@ -11374,13 +11403,12 @@ input:checked+.slider:before {
 .add-listing-section .row.with-forms input[type=text],
 .add-listing-section .row.with-forms select,
 .add-listing-section .row.with-forms textarea {
-    margin-bottom: 22px
+    margin-bottom: 15px
 }
 
 .add-listing-section textarea {
-    min-height: 200px;
-    margin-bottom: 35px
-}
+    min-height: 60px;
+ }
 
 #add-listing h5.fb-input {
     color: #3b5998
@@ -12410,7 +12438,7 @@ input:checked+.slider:before {
 
 .dropzone {
     min-height: 150px;
-    padding: 20px
+    padding: 5px
 }
 
 .dropzone.dz-clickable {
@@ -12490,7 +12518,7 @@ input:checked+.slider:before {
     position: absolute;
     top: 0;
     left: 0;
-    opacity: 0;
+    /*opacity: 0;*/
     font-size: 13px;
     min-width: 100%;
     max-width: 100%;
@@ -12502,7 +12530,8 @@ input:checked+.slider:before {
 
 .dropzone .dz-preview .dz-details .dz-size {
     margin-bottom: 1em;
-    font-size: 16px
+    font-size: 16px;
+	opacity: 0;
 }
 
 .dropzone .dz-preview .dz-details .dz-filename {
@@ -12543,8 +12572,8 @@ input:checked+.slider:before {
 .dropzone .dz-preview .dz-image {
     border-radius: 3px;
     overflow: hidden;
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     position: relative;
     transition: all .3s;
     display: block;
@@ -12737,7 +12766,7 @@ input:checked+.slider:before {
 .dropzone .dz-message {
     text-align: center;
     margin: 50px 0;
-    font-size: 17px;
+    font-size: 14px;
     color: #000;
     transition: all .3s linear;
     position: relative;
@@ -12758,8 +12787,8 @@ input:checked+.slider:before {
 
 .dz-message i {
     display: block;
-    font-size: 32px;
-    margin-bottom: 15px
+    font-size: 24px;
+    margin-bottom: 10px
 }
 
 .mfp-bg {
@@ -13024,8 +13053,33 @@ button.mfp-close {
 .mfp-close:hover {
     color: #fff
 }
+#sign-in-dialog1,
+#small-dialog .mfp-close,
+.mfp-close,
+.mfp-close:hover {
+    color: #fff
+}
 
 #sign-in-dialog .mfp-close,
+#small-dialog .mfp-close{
+    color: #000;
+    background-color: #e4e4e4;
+    border-radius: 50%;
+    top: 28px;
+    right: 40px;
+    width: 40px;
+    height: 40px
+}
+#platform-alert-box .mfp-close {
+    color: #000;
+    background-color: #e4e4e4;
+    border-radius: 50%;
+    top: 10px;
+    right: 12px;
+    width: 40px;
+    height: 40px
+}
+#sign-in-dialog1 .mfp-close,
 #small-dialog .mfp-close {
     color: #000;
     background-color: #e4e4e4;
@@ -13037,6 +13091,12 @@ button.mfp-close {
 }
 
 #sign-in-dialog .mfp-close:hover,
+#small-dialog .mfp-close:hover,#platform-alert-box .mfp-close :hover  {
+    color: #fff;
+    transform: rotate(0);
+    background-color: #66676b
+}
+#sign-in-dialog1 .mfp-close:hover,
 #small-dialog .mfp-close:hover {
     color: #fff;
     transform: rotate(0);
@@ -13046,7 +13106,20 @@ button.mfp-close {
 #sign-in-dialog .mfp-close::after,
 #sign-in-dialog .mfp-close::before,
 #small-dialog .mfp-close::after,
-#small-dialog .mfp-close::before {
+#small-dialog .mfp-close::before,
+#platform-alert-box .mfp-close::before,
+#platform-alert-box .mfp-close::after {
+    top: 4px;
+    height: 9px;
+    font-size: 21px;
+    transition: 0s
+}
+#sign-in-dialog1 .mfp-close::after,
+#sign-in-dialog1 .mfp-close::before,
+#small-dialog .mfp-close::after,
+#small-dialog .mfp-close::before,
+#platform-alert-box .mfp-close::before,
+#platform-alert-box .mfp-close::after {
     top: 4px;
     height: 9px;
     font-size: 21px;
@@ -13198,7 +13271,22 @@ img.mfp-img {
     border-radius: 4px
 }
 
+#sign-in-dialog1,
+#small-dialog {
+    background: #fff;
+    padding: 0 40px 40px;
+    text-align: left;
+    max-width: 610px;
+    margin: 40px auto;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 4px
+}
+
 #sign-in-dialog {
+    max-width: 500px
+}
+#sign-in-dialog1 {
     max-width: 500px
 }
 
@@ -13208,6 +13296,10 @@ img.mfp-img {
 }
 
 #sign-in-dialog span.line,
+#small-dialog span.line {
+    padding-top: 0
+}
+#sign-in-dialog1 span.line,
 #small-dialog span.line {
     padding-top: 0
 }
@@ -13916,32 +14008,32 @@ screen and (max-height:300px) {
     border-radius: 50px;
     color: #000;
     line-height: 26px;
-    transition: all .3s
+    transition: all .3s;
 }
 
 .option-set li a:hover {
-    background-color: #e9e9e9
+    background-color: #e9e9e9;
 }
 
 .option-set li a.selected {
     color: #fff;
-    background-color: #66676b
+    background-color: #66676b;
 }
 
 #wrapper,
 body {
-    background-color: #fff
+    background-color: #fff;
 }
 
 body {
     color: #000;
     font-size: 15px;
-    line-height: 27px
+    line-height: 28px;
 }
 
 body p {
     font-size: 16px;
-    line-height: 29px
+    line-height: 28px;
 }
 
 #tiptip_content,

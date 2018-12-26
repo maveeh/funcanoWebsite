@@ -1,26 +1,27 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /* 
 	|--------------------------------------------------------------------------
-	| Model for Dealer Authentication
+	| Model for Admin Authentication
 	|--------------------------------------------------------------------------
 */
 
 class Common_model extends CI_Model {
 
  
-    function Common_model()
+    function __construct()
     {
         // Call the Model constructor
        parent::__construct();
     }
-
-    public function android($data,$target)
+	
+	public function android($data,$target)
 	{
 		//FCM api URL
 		$url = 'https://fcm.googleapis.com/fcm/send';
 		//api_key available in Firebase Console -> Project Settings -> CLOUD MESSAGING -> Server key
 		//$server_key = 'AAAA8BUQG1I:APA91bFVKylxBC0GQhpX0wh6T2mAtQEEiJhIPcQkVjcfOAzW97nrkkRTvUdIFS3bqwy1uFrP_EGTJN74AFVfw80t2PRgDaMKnsD9_q3nJl8HprR6kSZKlh3G2JSFmThIgEdv3cDeE52P';
-		$server_key = 'AAAAAU8iCOo:APA91bFzOFkVgHaQfoFgNXi4nt4m16_aWt2JmmVdLx8WG8LSEbmXJvxD_IFkEQyKMKKIfPkh55L8tp0WqUoJ66z4LSlhr8UO4oyI9Dqf9ijVtXkS_IpYPM7A2l3E7ruPyIyJBvTlsREx';
+		// $server_key = 'AIzaSyBJn_k3PXwI1J1BBUjDPbBGmkZIVHPOykY';
+		$server_key = 'AAAAwtOkLDY:APA91bG_9GnGx6I8p_p0Z1BMVyjdXPr7pBNxzjNKq4ist254_FTuhEcP7VGDkCN4J5HOMpQWonbPAHaFwrUQicNsFSeOUTchcVTd6alUzQsgGLv614SY9Y3CkQKJ2DEt9wssnxAgojzq3bbKwT0uigQNNwaf3gW31A';
 					
 		$fields = array();
 		$fields['data'] = $data;
@@ -54,7 +55,7 @@ class Common_model extends CI_Model {
 		echo $result;
 	}
 
-
+	
  	/*
 	|--------------------------------------------------------------------------
 	| Function for select table data
@@ -75,6 +76,7 @@ LEFT JOIN nm_magazine AS mg ON cm.magazine_id = mg.magazine_id
 WHERE mg.magazine_id =1*/ 	
 	function selTableData($tablename="", $fieldarr="", $condarr="", $ob="", $start=0, $end=0, $gb="", $isSingleRow=0, $hv="")
     {
+		
 		$this->db->select($fieldarr);
 		
 		if($condarr != "")
@@ -106,7 +108,7 @@ WHERE mg.magazine_id =1*/
 		if($ob != "")
 			$this->db->order_by($ob);
 		
-    $query		=	$this->db->get($tablename);
+		$query		=	$this->db->get($tablename);
 		//echo $this->db->last_query(); exit;
 		$recordset	=	array();
 		
@@ -130,27 +132,22 @@ WHERE mg.magazine_id =1*/
 		isSingleRow = 	0; returns multi row result set
 	|--------------------------------------------------------------------------
 	*/ 	
-	function joinTableData($tableName="",$joinTable="",$fieldarr="", $joinOn="",$cond="", $ob="", $start=0, $end=0, $gb="", $isSingleRow=0) {		
+	function joinTableData($tableName="",$joinTable="", $fieldarr="", $joinOn="", $cond="", $ob="", $start=0, $end=0, $gb="", $isSingleRow=0, $joinType="left") {		
 		$this->db->select($fieldarr);
 		$this->db->from($tableName);
-		$this->db->join($joinTable, $joinOn, "Left");
+		$this->db->join($joinTable, $joinOn, $joinType);
+		
 		if($ob != "")
 			$this->db->order_by($ob);
 		
 		if($cond != "")
 			$this->db->where($cond);	
-		
+			
 		if($gb != "")
 			$this->db->group_by($gb);
-		
-		if($gb != "")
-			$this->db->group_by($gb);
-		
-		if($end)
-			$this->db->limit($end, $start);
 			
 		$query = $this->db->get_compiled_select();
-		return $this->exeQuery($query, $isSingleRow);
+		return $this->exequery($query, $isSingleRow);
     }
 	
 	/*
@@ -160,7 +157,7 @@ WHERE mg.magazine_id =1*/
 	| isSingleRow = 0; returns multi row result set
 	|--------------------------------------------------------------------------
 	*/ 	
-	function exeQuery($query="", $isSingleRow = 0) {		
+	function exequery($query="", $isSingleRow = 0) {		
 		$query      =	$this->db->query($query);
 		//echo $this->db->last_query(); exit;
 		$recordset	=	array();
@@ -182,7 +179,7 @@ WHERE mg.magazine_id =1*/
 	| Function for all records 
 	|--------------------------------------------------------------------------
 	*/ 	
-	function getAllRecord($tablename="",$cond=array())
+	function getallrecord($tablename="",$cond=array())
     {
 		if(count($cond))
 			$this->db->where($cond);
@@ -217,7 +214,7 @@ WHERE mg.magazine_id =1*/
 		$flag = '';
 		if($tablename!=""){
 			if($this->db->insert($tablename, $insertdata)) {
-				$flag = $this->db->insert_id();				
+				$flag = ($this->db->insert_id() > 0) ? $this->db->insert_id() : TRUE;				
 			} else {
 				$flag = FALSE;
 			}
@@ -250,7 +247,7 @@ WHERE mg.magazine_id =1*/
 	*/ 	
     function update($tablename="",$updatedata=array(),$cond)
     {
-		if(count($cond)){
+		if($cond != ''){
         	$flag=$this->db->update($tablename, $updatedata, $cond);
 			return $flag;
 		}else{
@@ -273,10 +270,7 @@ WHERE mg.magazine_id =1*/
 			return FALSE;
 		}
     }
-	function delete($id){
-		$this->db->where('userId', $id);
-		$this->db->delete('nx_user');
-		}
+	
 	
 	
 	/*
@@ -285,7 +279,7 @@ WHERE mg.magazine_id =1*/
 	|--------------------------------------------------------------------------
 	*/ 	
 	
-	function nextInsertid($tablename=""){
+	function nextInsertId($tablename=""){
 		$sql = "SHOW TABLE STATUS LIKE '".$tablename."'";
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0)
@@ -298,7 +292,7 @@ WHERE mg.magazine_id =1*/
 	
 	/*
 	|--------------------------------------------------------------------------
-	| Function to get record for given columb
+	| Function to get record for given column
 	|--------------------------------------------------------------------------
 	*/ 	
 	
@@ -313,12 +307,10 @@ WHERE mg.magazine_id =1*/
         $query		=	$this->db->get($tablename);		
 		
 		if($query && $query->num_rows())
-		{	$row = $query->result_array();
-			
-			foreach($row[0]  as $key => $value)
+		{
+			foreach($query->result() as $row)
 			{
-				//v3print($value); exit;
-				return $value;	
+				return $row->$field;	
 			}
 		}
 		else

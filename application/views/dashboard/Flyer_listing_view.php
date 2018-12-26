@@ -1,4 +1,19 @@
 <?php $this->load->viewD("inc/header"); ?>
+
+<!-- =============== PAGE VENDOR STYLES =============== -->
+<!-- DATATABLES-->
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/vendor/datatables-colvis/css/dataTables.colVis.css">
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/vendor/datatables/media/css/dataTables.bootstrap.css">
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/vendor/dataTables.fontAwesome/index.css">
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/css/colorbox.css" />
+<!-- SELECT2-->
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/vendor/select2/dist/css/select2.css">
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css">
+<!-- ANIMATE.CSS-->
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/vendor/animate.css/animate.min.css">
+<!-- WHIRL (spinners)-->
+<link rel="stylesheet" href="<?php echo DASHSTATIC; ?>/vendor/whirl/dist/whirl.css">
+
 			<section>
          <!-- Page content-->
 				<div class="content-wrapper">
@@ -95,5 +110,47 @@
 			</section> 
 			<?php $this->load->viewD("inc/footer"); ?>
 			<?php $this->load->viewD("inc/listing_footer"); ?>
+
+			<script>
+	$(document).ready(function() {
+		var dtInstance2 = $('#datatable2').dataTable({
+			"bJQueryUI": true,
+			"bProcessing": true,
+	        'paging':   true,  // Table pagination
+	        'ordering': true,  // Column ordering 
+	        'info':     true,  
+			/* "scrollX": true, */
+	        // Text translation options
+	        // Note the required keywords between underscores (e.g _MENU_)
+	        oLanguage: {
+	            sSearch:      'Search:',
+	            sLengthMenu:  '_MENU_ records per page',
+	            info:         'Showing page _PAGE_ of _PAGES_',
+	            zeroRecords:  'Nothing found - sorry',
+	            infoEmpty:    'No records available',
+	            infoFiltered: '(filtered from _MAX_ total records)'
+	        },
+			"fnDrawCallback": function( oSettings ) {
+				$(".iframe").colorbox({width:"750px", height:"580px", iframe:true});	
+				$(".iframeRemove").colorbox({iframe:true, width:"650", height:"350",scrolling:false,
+								onClosed:function(){ window.location.reload(); }});
+				$(".iframeRecharge").colorbox({iframe:true, width:"650", height:"550",scrolling:false,
+								onClosed:function(){ window.location.reload(); }});
+
+				$(".iframeSetting").colorbox({iframe:true, width:"650", height:"500",scrolling:false,
+							onClosed:function(){ window.location.reload(); }});
+			}
+	    });
+	    var inputSearchClass = 'datatable_input_col_search';
+	    var columnInputs = $('tfoot .'+inputSearchClass);
+
+	    // On input keyup trigger filtering
+	    columnInputs
+	      .keyup(function () {
+	          dtInstance2.fnFilter(this.value, columnInputs.index(this));
+	      });
+	});
+
+	</script>
 </body>
 </html>

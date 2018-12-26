@@ -1,4 +1,3 @@
-
 <?php $this->load->viewF("inc/header"); ?>
 
 <style type="text/css">
@@ -18,7 +17,10 @@ button.button.height-Sidebar {
 .submitHide{
 	visibility: hidden;
 }
-
+.main-search-input {
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.50) !important;
+  
+}
 
 </style>
 <div class="clearfix"></div>
@@ -31,7 +33,7 @@ button.button.height-Sidebar {
 <div id="titlebar" class="gradient">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-10">
 				<div class="main-search-input gray-style margin-top-0 margin-bottom-10">
 
 				<div class="main-search-input-item">
@@ -41,38 +43,24 @@ button.button.height-Sidebar {
 } ?>"/>
 				</div>
 
-				<!-- <div class="main-search-input-item location">
-					<div id="autocomplete-container">
-						<input id="txt_location" name="txt_location" type="text" value="<?php if (isset($_GET['location'])) {
-
-	echo $_GET['location'];
-} ?>" placeholder="Location">
-					</div>
-					<a href="#"><i class="fa fa-map-marker"></i></a>
-				</div> -->
-
-				<!-- <div class="main-search-input-item">
-					<select data-placeholder="All Categories" id="dd_categoryId" name="dd_categoryId" class="chosen-select" >
-						 <option value="">Select Categories</option>
-						<?php foreach ($flyer as $flyer) {
-						 ?>
-						
-		                <option value="<?php echo $flyer->categoryTitle ;  ?>" <?php if(isset($_GET['categories'])){ if ($flyer->categoryTitle==$_GET['categories']) {
-		                	echo "Selected";
-		                } } ?>><?php echo $flyer->categoryTitle ;  ?></option> 
-		               <?php } ?>
-					</select>
-				</div> -->
+				
 
 				<button type="submit" onclick="sendCatData();" name="btnFlyerSearchList" class="button">Search</button>
 			</div>
 				
 
 			</div>
+			<div class="col-md-2">
+				<a href="<?php echo BASEURL."/listing"; ?>">
+					<button type="button" class="button show-all fullwidth margin-top-5">All Flyers</button>
+				</a>
+			</div>
 		</div>
 	</div>
 </div>
+
 </form>
+
 
 
 <!-- Content
@@ -90,7 +78,7 @@ button.button.height-Sidebar {
 		<div class="col-md-12">
 
 			<!-- Sorting - Filtering Section -->
-			<div class="row margin-bottom-25 margin-top-30">
+			<div class="row margin-bottom-25">
 
 				<div class="col-md-6">
 					<!-- Layout Switcher -->
@@ -303,9 +291,9 @@ function formSubmit() {
 function sendCatData(){
 $('#listing-search').on('submit', function(e){
     e.preventDefault();
-    var lookingFor =$.trim($("#txt_lookingFor").val()) ;
-    var location   =$.trim($("#txt_location").val()) ;
-    var categories   =$.trim($("#dd_categoryId").val()) ;
+    var lookingFor   = $.trim($("#txt_lookingFor").val()) ;
+    var location     = $.trim($("#txt_location").val()) ;
+    var categories   = $.trim($("#dd_categoryId").val()) ;
    
  if (lookingFor === "" && location === "" && categories === "") {
    //alert('Please Select Atleast One');

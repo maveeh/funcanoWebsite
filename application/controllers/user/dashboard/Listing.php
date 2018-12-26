@@ -10,17 +10,16 @@ class Listing extends CI_Controller {
 	}
    //User Login
 	public function add() {
-
-		// We define our address
-					
-	
+				
+		// We define our address	
 		$flyersCategories=$this->Common_model->selTableData("fc_flyer_category","*","");
 		$funcies=$this->Common_model->selTableData("fc_funcies","*","");
+		
+		$userId = $this->session->userdata(PREFIX.'sessUserId');
+		
 		if (isset($_POST['btnAddFlyers'])) {
 
-		
-	
-		 $flyersArr["userId"]	=$this->session->userdata(PREFIX.'sessUserId');
+		 $flyersArr["userId"]	= $userId;
 		  if (isset($_POST['txt_title'])) 	
 		 $flyersArr["title"]	=ucfirst(strtolower($_POST['txt_title']));
 		  if (isset($_POST['sel_categories'])) 	
@@ -32,10 +31,9 @@ class Listing extends CI_Controller {
 		 $flyersArr["city"]	=$_POST['sel_city'];
 		 if (isset($_POST['txt_state'])) 	
 		 $flyersArr["state"]	=$_POST['txt_state'];	
-		 if (isset($_POST['txt_zip'])) 	
-		 $flyersArr["zip"]	=$_POST['txt_zip'];	
+		 
 		 if (isset($_POST['txt_phone'])) 
-		 $flyersArr["phone"]	=$_POST['txt_zip'];	
+		 $flyersArr["phone"]	= $_POST['txt_phone'];	
 		 if (isset($_POST['txt_address'])) 	
 		 $flyersArr["address"]	=ucfirst($_POST['txt_address']);	
 		 if (isset($_POST['txt_website'])) 	
@@ -68,24 +66,23 @@ class Listing extends CI_Controller {
 		  /*ticket creation*/	
 		 if (isset($_POST['ticketCheck']) && $_POST['ticketCheck']=="on") {
 
-		 $flyersArr["tickerStatus"]	=2;
-		  if (isset($_POST['txt_ticketTitle'])) 
-		 $flyersArr["ticketTitle"]	=$_POST['txt_ticketTitle'];
-		 if (isset($_POST['txt_ticketDesc'])) 	
-		 $flyersArr["ticketDesc"]	=$_POST['txt_ticketDesc'];
-		 if (isset($_POST['txt_ticketPrice'])) 	
-		 $flyersArr["ticketPrice"]	=$_POST['txt_ticketPrice'];
-		 if (isset($_POST['txt_ticketQuantity'])) 	
-		 $flyersArr["ticketQuantity"]	=$_POST['txt_ticketQuantity'];		  
+			 $flyersArr["tickerStatus"]	=2;
+			  if (isset($_POST['txt_ticketTitle'])) 
+			 $flyersArr["ticketTitle"]	=$_POST['txt_ticketTitle'];
+			 if (isset($_POST['txt_ticketDesc'])) 	
+			 $flyersArr["ticketDesc"]	=$_POST['txt_ticketDesc'];
+			 if (isset($_POST['txt_ticketPrice'])) 	
+			 $flyersArr["ticketPrice"]	=$_POST['txt_ticketPrice'];
+			 if (isset($_POST['txt_ticketQuantity'])) 	
+			 $flyersArr["ticketQuantity"]	=$_POST['txt_ticketQuantity'];		  
 
-		 	}else{
+		}else{
 
-		 	 $flyersArr["tickerStatus"]	=1;	
-		 	}
+			$flyersArr["tickerStatus"]	=1;	
+		}
 		 
-
-
-		 if(is_uploaded_file($_FILES['flyersImage1']['tmp_name']) != "") {
+		
+		/* if(is_uploaded_file($_FILES['flyersImage1']['tmp_name']) != "") {
 					$uploadSettings = array();
 					$imgName  = generateStrongPassword(8, false, 'lud');
 					$fileNameMemberImage	=	$_FILES['flyersImage1']['name'];
@@ -153,15 +150,35 @@ class Listing extends CI_Controller {
 					$flyersArr['image3']		 =   $nameOfImageToSave;//$_FILES['btnMemberImage']['name'];
 
 				}
-
-
-		 	
+		*/
+		if($this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId) != null) {
+			$uploadImageArr = $this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId);
+			$c = 0;
+			foreach($uploadImageArr as $row) {
+				if($c == 0)
+					$flyersArr['image']		=   $row;
+				else 
+					$flyersArr['image'.$c]	=   $row;
+				$c++;
+			}
+		}
+		 	//v3print($flyersArr); exit;
+			
 	     $insert=$this->Common_model->insert("fc_flyers",$flyersArr,"");
 	     if ($insert) {
+			// flush flyer images array, uploaded using dropzone kept in session
+			if($this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId) != null) {
+				$this->session->unset_userdata(PREFIX.'sess_flyerUploads_'.$userId);
+			}
 	     	redirect(BASEURL."/user/dashboard/listing/active-flyers");
 	     }
 				
+		} else {
+			// Create session variable to store image names uploaded by DropZone
+			$uploadImageArr = array();
+			$this->session->set_userdata(PREFIX.'sess_flyerUploads_'.$userId, $uploadImageArr);
 		}
+		
 		$this->outputData['flyersCategories']=$flyersCategories ;
 		$this->outputData['funcies']=$funcies ;
 		$this->outputData['page']= "addFlyers";
@@ -169,6 +186,39 @@ class Listing extends CI_Controller {
 	$this->load->viewF("dashboard-add-listing",$this->outputData) ;
 		
 	}
+	
+	public function dropzone_upload() {
+		
+        if (!empty($_FILES)) {		
+			$uploadSettings = array();
+			$imgName  = generateStrongPassword(8, false, 'lud');
+			$fileNameMemberImage	=	$_FILES['file']['name'];
+			$fileTypeMemberImage	=	$_FILES['file']['type'];
+			$extensionArr 				= 	(explode(".", strtolower($_FILES['file']['name'])));
+			$extension = end($extensionArr);
+			$nameOfImageToSave = $imgName.".".$extension;
+			$uploadSettings['upload_path'] 		=	ABSPATH."/flyers/"; 
+			$uploadSettings['allowed_types'] 	=	'gif|jpg|png|PDF|pdf|jpeg';
+			$uploadSettings['file_name'] 		=	$nameOfImageToSave;
+			$uploadSettings['inputFieldName'] 	= 	'file';
+			
+			$fileUpload	=	$this->common_lib->_doUpload($uploadSettings);
+			if($fileUpload) {
+				$userId = $this->session->userdata(PREFIX.'sessUserId');
+				//if($this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId)) {
+					$uploadImageArr = $this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId);
+					array_push($uploadImageArr, $nameOfImageToSave);
+					//$uploadImageArr = array();
+					$this->session->set_userdata(PREFIX.'sess_flyerUploads_'.$userId, $uploadImageArr);
+					//v3print($uploadImageArr);
+				/*} else {
+					$uploadImageArr = array();
+					array_push($uploadImageArr, $nameOfImageToSave);
+					$this->session->set_userdata(PREFIX.'sess_flyerUploads_'.$userId, $uploadImageArr);
+				}*/
+			}
+        }
+    }
 
 	public function active_flyers(){
 
@@ -231,13 +281,19 @@ class Listing extends CI_Controller {
 	}
 
 	public function edit($flyerId){
-		$funcies=$this->Common_model->selTableData("fc_funcies","*","");
-			$flyersCategories=$this->Common_model->selTableData("fc_flyer_category","*","");
-		$flyersData=$this->Common_model->selTableData("fc_flyers","*","flyerId=".$flyerId);
-			
-			if (isset($_POST['btnUpdateFlyers'])) {
 
-		 $flyersUpdateArr["userId"]	=$this->session->userdata(PREFIX.'sessUserId');
+		$funcies=$this->Common_model->selTableData("fc_funcies","*","");
+		$flyersCategories=$this->Common_model->selTableData("fc_flyer_category","*","");
+		$flyersData=$this->Common_model->selRowData("fc_flyers","*","flyerId=".$flyerId);
+			
+		$userId = $this->session->userdata(PREFIX.'sessUserId');
+		
+		
+		if (isset($_POST['btnUpdateFlyers'])) {
+
+				//v3print($_POST); exit ;
+
+		 $flyersUpdateArr["userId"]	=	$userId;
 		  if (isset($_POST['txt_title'])) 	
 		 $flyersUpdateArr["title"]	=ucfirst(strtolower($_POST['txt_title']));
 		  if (isset($_POST['sel_categories'])) 	
@@ -283,9 +339,9 @@ class Listing extends CI_Controller {
 		}
 			
 		if (isset($_POST['startTime'])) 	
-		 $flyersArr["eventStartTime"]	=$_POST['startTime'];
+		 $flyersUpdateArr["eventStartTime"]	=$_POST['startTime'];
 		if (isset($_POST['endTime'])) 	
-		 $flyersArr["eventEndTime"]	=$_POST['endTime'];
+		 $flyersUpdateArr["eventEndTime"]	=$_POST['endTime'];
 		  if (isset($_POST['txt_lat'])) 	
 		 $flyersUpdateArr["latitude"]	=$_POST['txt_lat'];
 		 if (isset($_POST['txt_long'])) 	
@@ -293,7 +349,7 @@ class Listing extends CI_Controller {
 
 		 if (isset($_POST['ticketCheck']) && $_POST['ticketCheck']=="on") {
 
-		 $flyersUpdateArr["tickerStatus"]	=2;
+		 $flyersUpdateArr["tickerStatus"]	= 2;
 		  if (isset($_POST['txt_ticketTitle'])) 
 		 $flyersUpdateArr["ticketTitle"]	=$_POST['txt_ticketTitle'];
 		 if (isset($_POST['txt_ticketDesc'])) 	
@@ -311,7 +367,7 @@ class Listing extends CI_Controller {
 
 		
 
-		 if(is_uploaded_file($_FILES['flyersImage1']['tmp_name']) != "") {
+		/* if(is_uploaded_file($_FILES['flyersImage1']['tmp_name']) != "") {
 					$uploadSettings = array();
 					$imgName  = generateStrongPassword(8, false, 'lud');
 					$fileNameMemberImage	=	$_FILES['flyersImage1']['name'];
@@ -378,15 +434,47 @@ class Listing extends CI_Controller {
 					$fileUpload	=	$this->common_lib->_doUpload($uploadSettings);
 					$flyersUpdateArr['image3']		 =   $nameOfImageToSave;//$_FILES['btnMemberImage']['name'];
 
+				}*/
+			//if($this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId)) {
+				$uploadImageArr = $this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId);
+				
+				if(count($uploadImageArr) > 0) {
+					$c = 0;
+					if($flyersData->image == '') {
+						$flyersUpdateArr['image'] = $uploadImageArr[$c];
+						$c++;
+					}
+					if($flyersData->image1 == '') {
+						$flyersUpdateArr['image1'] = $uploadImageArr[$c];
+						$c++;
+					}
+					if($flyersData->image2 == '') {
+						$flyersUpdateArr['image2'] = $uploadImageArr[$c];
+						$c++;
+					}
+					if($flyersData->image3 == '') {
+						$flyersUpdateArr['image3'] = $uploadImageArr[$c];
+						$c++;
+					}
 				}
+					
+			//}
 		 	
 	     $insert=$this->Common_model->update("fc_flyers",$flyersUpdateArr,"flyerId=".$flyerId);
 	     if ($insert) {
+			// flush flyer images array, uploaded using dropzone kept in session
+			if($this->session->userdata(PREFIX.'sess_flyerUploads_'.$userId) != null) {
+				$this->session->unset_userdata(PREFIX.'sess_flyerUploads_'.$userId);
+			}
 	     	redirect(BASEURL."/user/dashboard/listing/active-flyers");
 	     }
 				
+		} else {
+			// Create session variable to store image names uploaded by DropZone
+			$uploadImageArr = array();
+			$this->session->set_userdata(PREFIX.'sess_flyerUploads_'.$userId, $uploadImageArr);
 		}
-		$this->outputData['flyersData']=$flyersData[0] ;
+		$this->outputData['flyersData']=$flyersData;
 			$this->outputData['flyersCategories']=$flyersCategories ;
 			$this->outputData['funcies']=$funcies ;
 				$this->outputData['page']="editFlyers";
@@ -461,10 +549,4 @@ class Listing extends CI_Controller {
 	
 	}
 
-	
-
-
-	
-
-	}
-	
+}

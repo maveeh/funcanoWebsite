@@ -113,6 +113,12 @@ input:checked+.slider,
     color: #000 !important;
 }
 
+#sign-in-dialog1 .mfp-close:hover,
+#small-dialog .mfp-close:hover {
+    background-color: #f3e90b;
+    color: #000 !important;
+}
+
 .rangeslider__fill,
 span.blog-item-tag,
 .testimonial-carousel .slick-slide.slick-active .testimonial-box,

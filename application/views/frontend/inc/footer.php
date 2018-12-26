@@ -53,10 +53,10 @@
         </div>
 
         <ul class="social-icons margin-top-20">
-          <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-          <li><a class="twitter" href="#"><i class="icon-twitter"></i></a></li>
-          <li><a class="gplus" href="#"><i class="icon-gplus"></i></a></li>
-          <li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li>
+          <li><a class="facebook" href="https://www.facebook.com/Funcano-331523750736304/" target="_blank"><i class="icon-facebook"></i></a></li>
+          <li><a class="twitter" href="https://twitter.com/FuncanoLive" target="_blank"><i class="icon-twitter"></i></a></li>
+          <li><a class="gplus" href="https://plus.google.com/114056123652259636618" target="_blank"><i class="icon-gplus"></i></a></li>
+         <!--  <li><a class="vimeo" href="#"><i class="icon-vimeo"></i></a></li> -->
         </ul>
 
       </div>
@@ -99,6 +99,7 @@
 <script type="text/javascript" src="<?php echo FRONTJS."/scripts/jquery-ui.min.js"?>"></script>
 <script type="text/javascript" src="<?php echo FRONTJS."/scripts/tooltips.min.js"?>"></script>
 <script type="text/javascript" src="<?php echo FRONTJS."/scripts/custom.js"?>"></script>
+<script type="text/javascript" src="<?php echo FRONTJS."/scripts/lighweightPopup.min.js"?>"></script>
 
 
 <!-- Google Autocomplete -->
@@ -154,7 +155,7 @@
            {
               
             //alert("failure") ;
-           window.setTimeout(function(){location.reload()},100);
+           window.setTimeout(function(){window.location.href = '<?php echo base_url();?>';},100);
              
            
            } else{
@@ -252,23 +253,7 @@ password.addEventListener('input', function()
 </script>-->
 
 
-<!--<script type="text/javascript">
-function validatePassword() {
-    var newPassword = document.getElementById('password1').newPassword.value;
-    var minNumberofChars = 6;
-    var maxNumberofChars = 6;
-    var regularExpression = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/;
 
-    alert(newPassword); 
-    if(newPassword.length < minNumberofChars || newPassword.length > maxNumberofChars){
-        return false;
-    }
-    if(!regularExpression.test(newPassword)) {
-        alert("password should contain atleast one number and one special character");
-        return false;
-    }
-}
-</script>-->
 
 <script type="text/javascript">
  chkpwd = function(validate) {
@@ -283,7 +268,7 @@ function validatePassword() {
     var maxNumberofChars = 6;
     var regularExpression = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/;
 
-    alert(newPassword); 
+   
     if(newPassword.length < minNumberofChars || newPassword.length > maxNumberofChars){
         return false;
     }
@@ -350,7 +335,25 @@ $(document).ready(function(){
 });
 </script>-->
 
+<script>
+$(document).ready(function() {
+	$("#askConfirm").click(function(){ ymz.jq_confirm({title:"Confirm", text:"Funcano account will be logout", no_btn:"Cancel", yes_btn:"Confirm", no_fn:function(){return false; }, yes_fn:function(){window.location = '<?php echo BASEURL."/login/logout" ?>'; }}); });
+	
+	//$("#AddFlyerImageAlert").click(function(){ ymz.jq_alert({title:"Alert", text:"You have already uploaded 4 photos.", ok_btn:"Okey", close_fn:null}); });
+	
+	$("#toast_success").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "success", sec: 3}); });
+	$("#toast_error").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "error", sec: 3}); });
+	$("#toast_notice").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "notice", sec: 3}); });
+	$("#toast_warning").click(function(){ ymz.jq_toast({text:"This is ymzbox toast text", type: "warning", sec: 3}); });
+	
+	$("#loading").click(function(){ ymz.jq_loading.show({text:"Loading", is_cover: 0}); });
+	$("#loading_close").click(function(){ ymz.jq_loading.hide(); });
+	
+	$("#alert1").click(function(){ ymz.jq_alert({title:"Alert", text:"Alert Message", ok_btn:"Okey", close_fn:null}); });
+	
+	
+	
+});
+</script>
 </body>
-
-<!-- Mirrored from www.vasterad.com/themes/listeo_updated/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 22 May 2018 12:59:40 GMT -->
 </html>

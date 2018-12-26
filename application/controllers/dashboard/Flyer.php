@@ -12,7 +12,7 @@ class Flyer extends CI_Controller {
 
 	//listing Flyer
 	function index(){
-		$this->outputdata["data"]		=	$this->Common_model->joinTableData(PREFIX."flyers","fc_user","*","fc_flyers.userId=fc_user.userId","fc_flyers.status != 3","flyerId asc");
+		$this->outputdata["data"]		=	$this->Common_model->joinTableData(PREFIX."flyers","fc_user","*","fc_flyers.userId=fc_user.userId","fc_flyers.status != 3","flyerId desc");
 
 		
 		$this->load->viewD("Flyer_listing_view",$this->outputdata);

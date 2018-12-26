@@ -1,4 +1,4 @@
-<?php //v3print($reviewData); exit ; ?>
+<?php //v3print($flyresdata->userId); exit ; ?>
 <?php $this->load->viewF("inc/header"); ?>
 
 
@@ -14,17 +14,17 @@
 <div class="clearfix"></div>
 <!-- Header Container / End -->
 <!-- <div class="listing-slider mfp-gallery-container margin-bottom-0">
-	<?php if ($flyresdata->image!="") {
+	<?php if ($flyresdata->image != "") {
 		 ?>
 	<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" class="item mfp-gallery" title="Title 1"></a>
 	<?php } ?>
-	<?php if ($flyresdata->image1!="") {
+	<?php if ($flyresdata->image1 != "") {
 		 ?>
 	<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image1 ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image1 ; ?>" class="item mfp-gallery" title="Title 3"></a>
-	<?php } if ($flyresdata->image2!="") {
+	<?php } if ($flyresdata->image2 != "") {
 		 ?>
 	<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image2 ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image2 ; ?>" class="item mfp-gallery" title="Title 2"></a>
-	<?php } if ($flyresdata->image3!="") {
+	<?php } if ($flyresdata->image3 != "") {
 		 ?>
 	<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image3 ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image3 ; ?>" class="item mfp-gallery" title="Title 4"></a>
 	<?php } ?>
@@ -73,12 +73,13 @@
 					<li><a href="#listing-location">Location</a></li> 
 					<?php } ?>
 					<li><a href="#listing-reviews">Comments</a></li>
-					<li><a href="#add-review">Add Comments</a></li>
+					<?php 	if ($this->session->userdata(PREFIX.'sessUserId') != $flyresdata->userId) { ?>
+					<li><a href="#add-review">Add Comments</a></li> <?php } ?>
 				</ul>
 			</div>
 			
 			<!-- Overview -->
-			
+			<?php if($flyresdata->flyersDesc != "") { ?>
 			<div id="listing-description" class="listing-section">
 
 				<p>
@@ -86,6 +87,7 @@
 				</p> 
 
 			</div>
+			<?php } ?>
 			<div id="listing-overview" class="listing-section">
 
 				<!-- Description -->
@@ -106,27 +108,29 @@
 				 ?>
 				</ul>
 			</div>
-
+			<?php if($flyresdata->image != "" OR $flyresdata->image1 != "" OR $flyresdata->image2 != "" OR $flyresdata->image3 != "") { ?>
 			<!-- Slider -->
 			<div id="listing-gallery" class="listing-section">
 				<h3 class="listing-desc-headline margin-top-70">Gallery</h3>
 				<div class="listing-slider-small mfp-gallery-container margin-bottom-0">
-				<?php if($flyresdata->image != "") { ?>
+				<?php 
+				
+				if($flyresdata->image != "") { ?>
 					<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image ; ?>" class="item mfp-gallery" ></a>
-				<?php } else if($flyresdata->image1 != "") { ?>
+				<?php }  if($flyresdata->image1 != "") { ?>
 					<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image1 ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image1 ; ?>" class="item mfp-gallery" ></a>
-				<?php } else if($flyresdata->image2 != "") { ?>
+				<?php }  if($flyresdata->image2 != "") { ?>
 					<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image2 ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image2 ; ?>" class="item mfp-gallery" ></a>
-				<?php } else if($flyresdata->image3 != "") { ?>
+				<?php }  if($flyresdata->image3 != "") { ?>
 					<a href="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image3 ; ?>" data-background-image="<?php  echo UPLOADPATH."/flyers/".$flyresdata->image3 ; ?>" class="item mfp-gallery" ></a>
-				<?php }else{ ?>
+				<?php } /*else { ?>
 				<a href="<?php   echo UPLOADPATH."/default-flyer.png" ; ?>" data-background-image="<?php   echo UPLOADPATH."/default-flyer.png" ; ?>" class="item mfp-gallery" ></a>
 					
-			 <?php	} ?>
+			 <?php	}*/  ?>
 				</div>
 			</div>
-
-		<?php if ($flyresdata->flyerAddress != "" OR $flyresdata->city != "" OR $flyresdata->state != "") { 
+			<?php } 
+			if ($flyresdata->flyerAddress != "" OR $flyresdata->city != "" OR $flyresdata->state != "") { 
 			//print_r($flyresdata); exit;
 			$flyerAddress = '';
 			$flyerAddress = $flyresdata->flyerAddress;
@@ -185,7 +189,9 @@
 						<?php
 							}
 						}else{ ?>
-						 <h5><?php	echo "There is no comment. Be the first one"; ?></h5> <?php 
+						 <h5><?php 	if ($this->session->userdata(PREFIX.'sessUserId') != $flyresdata->userId) {	echo "There is no comment. Be the first one"; }else {
+						 echo "There is no any comment on your flyer";	
+						 } ?></h5> <?php 
 						} ?>
 
 					 </ul>
@@ -212,6 +218,9 @@
 			</div>
 
    <?php  if ($displayAddComm==0) {
+
+   	if ($this->session->userdata(PREFIX.'sessUserId') != $flyresdata->userId) {
+   		
  ?>
 			<!-- Add Review Box -->
 			<form method="post" enctype="multipart/form-data">
@@ -270,9 +279,9 @@
 					</fieldset>
 					<?php if ($this->session->userdata(PREFIX.'sessUserId') > 0 ) { ?>
 					<input type="hidden" name="name" value="<?php echo $this->session->userdata(PREFIX.'sessName') ; ?>" />
-					<button type="submit" name="btnReview" class="button">Submit Review</button>
+					<button type="submit" name="btnReview" class="button">Add Comment</button>
 					<?php }else { ?>
-					 <a href="#sign-in-dialog" onclick="signButtonDisplay() ;" class="sign-in popup-with-zoom-anim"><button class="button">Submit Review</button></a>
+					 <a href="#sign-in-dialog" onclick="signButtonDisplay() ;" class="sign-in popup-with-zoom-anim"><button class="button">Add Comment</button></a>
 					<?php } ?>
 					<div class="clearfix"></div>
 		
@@ -280,7 +289,7 @@
 			</div>
 			</form>
 	
-			<?php } ?>
+			<?php } } ?>
 			<!-- Add Review Box / End -->
 
 
@@ -292,7 +301,9 @@
 		================================================== -->
 		<div class="col-lg-4 col-md-4 margin-top-75 sticky">
 
-			<?php if ($this->session->userdata(PREFIX.'sessUserId')>0) { 
+			<?php 	if ($this->session->userdata(PREFIX.'sessUserId') != $flyresdata->userId) {
+
+			 if ($this->session->userdata(PREFIX.'sessUserId')>0) { 
 				if ($isInterested > 0) {
 					
 				?>	
@@ -310,7 +321,7 @@
 			
 			  <?php } if($totalInterested->TotalInterest> 0 ) { ?>
 		<div class="text-center"><?php echo $totalInterested->TotalInterest;  ?> People Interested <!-- in this place --></div>
-		<?php }	} ?>
+		<?php }	} } ?>
 		<!-- Contact -->
 			<div class="boxed-widget margin-top-35">
 				<div class="hosted-by-title">
@@ -385,7 +396,7 @@
 		<form method="post">			
 		<!-- <div class="boxed-widget booking-widget margin-top-35"> -->
 		    <div class="boxed-widget  opening-hours summary margin-top-0">
-		    	<?php  if ($flyresdata->tickerStatus !=1) {  ?>
+		    	<?php if ($this->session->userdata(PREFIX.'sessUserId') != $flyresdata->userId) {  if ($flyresdata->tickerStatus !=1) {  ?>
 
 				<h3><i class="fa fa-calendar-check-o "></i> Buy a Ticket</h3>
 				<ul>
@@ -399,14 +410,17 @@
 
 					<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
 					
- 					<div class="col-lg-12 col-md-12">
-						<input type="number"  step="any" required min="1" max="<?php echo $flyresdata->ticketQuantity ; ?>" name="txt_ticketQuantity" placeholder="Quantity" />
+ 					<div class="col-lg-12 col-md-12 fm-input pricing-name">
+						<input type="number" required min="1" max="<?php echo $flyresdata->ticketQuantity ; ?>" name="txt_ticketQuantity" placeholder="Quantity" />
+
+						<!-- <div class="fm-input pricing-name"><input type="number" name="txt_ticketQuantity" min="0" placeholder="Quantity" /></div> -->
 					</div>
 				</div>
 				
 				<!-- progress button animation handled via custom.js -->
 				<button type="submit" name="btnBuy" class="button book-now fullwidth margin-top-5">Buy Now</button>
 				<?php }  }else{ ?> <button type="button" class="button book-now fullwidth margin-top-5">Free Event</button> <?php	}
+			}
 
 	  ?>
 			</div>
@@ -414,7 +428,7 @@
 		
 			<!-- Book Now / End -->
 			<!-- Opening Hours -->
-			<div class="boxed-widget opening-hours margin-top-35">
+			<!-- <div class="boxed-widget opening-hours margin-top-35">
 				<div class="listing-badge now-open">Now Open</div>
 				<h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
 				<ul>
@@ -426,7 +440,7 @@
 					<li>Saturday <span>9 AM - 3 PM</span></li>
 					<li>Sunday <span>Closed</span></li>
 				</ul>
-			</div> 
+			</div>  -->
 			<!-- Opening Hours / End -->
 
 

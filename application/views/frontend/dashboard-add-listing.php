@@ -1,64 +1,47 @@
 <?php $this->load->viewF("inc/headerDashboard"); ?>
 <?php $this->load->viewF("inc/sidebar"); ?>
+<!--
+<style>
+  .dz-max-files-reached {background-color: orange};
+</style>-->
 	<!-- Content
 	================================================== -->
 	<div class="dashboard-content">
 
-		<!-- Titlebar -->
-		<!-- <div id="titlebar">
-			<div class="row">
-				<div class="col-md-12">
-					<h2>Add Flyer</h2>
-					<!-- Breadcrumbs -->
-					<!--<nav id="breadcrumbs"> -->
-						<!-- <ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#">Dashboard</a></li>
-							<li>Add Flyer</li>
-						</ul> -->
-					<!-- </nav>
-				</div>
-			</div>
-		</div> -->
-
 		<div  class="row">
-			<div class="col-lg-12">
-				<form method="post" enctype='multipart/form-data' onsubmit="return postcodeValidate();" name="login" value="Login">
+			
+			<div class="col-md-12">
+			
+					<!-- Section -->
+					<div id="add-listing">
+			<div class="add-listing-section">
+						
+						<div>
+							<h5><i class="sl sl-icon-picture"></i> Upload Photos <span class="h6 warning">Max 4 photos. 1Mb file size.</span></h5> 
+						</div>
+						  <!-- Dropzone 
+						  <form action="<?php echo BASEURL.'/user/dashboard/listing/dropzone_upload'; ?>" class="Dropzone" style="width:200px;" id="fileupload">-->
+						   <div class="submit-section">
+							<form action="<?php echo BASEURL.'/user/dashboard/listing/dropzone_upload'; ?>" id="myAwesomeDropzone" class="dropzone" ></form>
+						</div>
+						
+			
+				<form method="post" enctype='multipart/form-data' id="myForm" onsubmit="return dateValidation();" name="login" value="Login">
 
 					<!-- onsubmit="return postcodeValidate();" -->
 
-				<div id="add-listing">
-
-					
-						
-
-					<!-- Section -->
-					<div class="add-listing-section">
-
-					
-
-						<!-- Headline -->
-						 <div class="add-listing-headline">
-						<!-- <div> -->
-							<h3>Add Flyer<!-- Basic Informations --></h3>
-						</div>
+				
 
 						<!-- Title -->
 						<div class="row with-forms">
-							<div class="col-md-12">
-								<h5>Flyer Title <i class="tip" data-tip-content="Name of your Flyer"></i></h5>
+							<div class="col-md-6">
+								<h5>Title <i class="tip" data-tip-content="Name of your Flyer"></i></h5>
 								<input class="search-field" name="txt_title" id="txt_title" type="text" value="" required/>
 							</div>
-						</div>
-
-						<!-- Row -->
-						<div class="row with-forms">
-
-							<!-- Status -->
 							<div class="col-md-6">
 								<h5>Category</h5>
 								<select  class="chosen-select-no-single" id="sel_categories" name="sel_categories" >
-								<option value="">Select Categories</option>	
+								<option value="">Select Category</option>	
 									<?php foreach ($flyersCategories as $flyersCategories) {
 									 ?>
 									 <option value="<?php echo $flyersCategories->categoryTitle; ?>"><?php echo $flyersCategories->categoryTitle; ?></option>
@@ -66,7 +49,12 @@
 								</select>
 								<mark id="errorLbl3"></mark>
 							</div>
+						</div>
 
+						<!-- Row -->
+						<div class="row with-forms">
+
+							<!-- Status -->
 							<!-- Type -->
 							<div class="col-md-6">
 
@@ -80,93 +68,53 @@
 			</select>
 						<mark id="errorLbl4"></mark>
 		</div>
-
+<!-- Address -->
+								<div class="col-md-6">
+									<h5>Address</h5>
+									<input type="text" name="txt_address" placeholder="e.g. 964 School Street" required>
+								</div>
 						</div>
-						<!-- Row / End -->
-
-						 <!-- <div class="add-listing-headline"> -->
-						 <div>
-							<h3><i class="sl sl-icon-picture"></i> Gallery</h3>
-						</div>
-
-						<!-- Dropzone -->
-					<div class="row">
-			           <div class="col-md-12">
-			           	<div class="col-md-6">
-						  <input type="file" name="flyersImage1" class="upload" />
-						 </div> <div class="col-md-6">
-						  <input type="file" name="flyersImage2" class="upload" />
-						 </div> <div class="col-md-6">
-						  <input type="file" name="flyersImage3" class="upload" />
-						</div>  <div class="col-md-6">
-						  <input type="file" name="flyersImage4" class="upload" />
-						</div>
-						</div>
-					</div>
-
-						<!-- <div class="add-listing-section margin-top-45"> -->
-
-				
-						<!-- <div class="add-listing-headline">  -->
+						<!-- Row / End 
+						
 						<div>
-							<h3><i class="fa fa-calendar-check-o"></i> Date/Time</h3>
+							<h4><i class="fa fa-calendar-check-o"></i> Date/Time</h4>
 						</div>
-
+-->
 						<div class="submit-section">
 
 					
 							<div class="row with-forms">
 
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<h5>Start Date</h5>
 								<input type="text" name="startData" id="booking-date1" data-lang="en" data-format="Y-m-d" data-large-mode="true" data-large-default="true" data-min-year="2017" data-max-year="2020" data-lock="from" required>
 
 								</div>
 
 								
-                                <div class="col-md-6">
+                                <div class="col-md-2">
 									<h5>Start Time</h5>
 								<input type="text" name="startTime" id="booking-time1" value="9:00 am" required>
 
 								</div>
-						
-								
-								
+						<div class="col-md-1"></div>
+								<div class="row with-forms">
 
-							</div>
-				
-
-						</div>
-
-					    <!-- </div> -->
-
-					   <!--  <div>
-							<h3><i class="fa fa-clock-o"></i> Time</h3>
-						</div> -->
-
-						<div class="submit-section">
-
-					
-							<div class="row with-forms">
-
-								<div class="col-md-6">
+								<div class="col-md-3">
 									<h5>End Date</h5>
-									<input type="text" name="endDate" id="booking-date2" data-lang="en" data-large-mode="true" data-large-default="true" data-format="Y-m-d" data-min-year="2017" data-max-year="2020" data-lock="from" required>
+									<input type="text" name="endDate" id="booking-date2" data-lang="en" data-large-mode="true"  data-large-default="true" data-format="Y-m-d" data-min-year="2017" data-max-year="2020" data-lock="from" required>
 								</div>
 
 								
-
-								<!-- <div class="col-lg-6 col-md-12">
-						          <input type="text" id="booking-time" value="9:00 am">
-					            </div> -->
-
-								
-
-						
-								<div class="col-md-6">
+								<div class="col-md-2">
 									<h5>End Time</h5>
-								<input type="text" name="endTime" id="booking-time2" value="9:00 am" required>
+								<input type="text" name="endTime"  id="booking-time2" value="10:00 am" required>
+
+								 <span id="dateSame"></span>
 								</div>
+								
+
+							</div>
 								
 
 							</div>
@@ -174,125 +122,12 @@
 
 						</div>
 
-					   <!--  <div class="add-listing-section margin-top-45"> -->
-
-						<!-- Headline -->
-						<!-- <div class="add-listing-headline"> -->
-						<div>
-							<h3><i class="sl sl-icon-location"></i> Location</h3>
+					   
+<!-- <div>
+							<h4><i class="sl sl-icon-docs"></i> More Details</h4>
 						</div>
 
-						<div class="submit-section">
-
-							<!-- Row -->
-							<div class="row with-forms">
-
-								<div class="col-md-6">
-									<h5>Country</h5>
-									<input type="text" name="txt_state" required>
-								</div>
-
-								<!-- City -->
-								<div class="col-md-6">
-									<h5>City</h5>
-									<select class="chosen-select-no-single" name="sel_city" required>
-										<option label="blank">Select City</option>	
-										<option value="New York">New York</option>
-										<option value="Los Angeles">Los Angeles</option>
-										<option value="Chicago">Chicago</option>
-										<option value="Houston">Houston</option>
-										<option value="Phoenix">Phoenix</option>
-										<option value="San Diego">San Diego</option>
-										<option value="Austin">Austin</option>
-									</select>
-								</div>
-
-								<!-- Address -->
-								<div class="col-md-6">
-									<h5>Address</h5>
-									<input type="text" name="txt_address" placeholder="e.g. 964 School Street" required>
-								</div>
-                                 
-                                <!-- Zip-Code -->
-								<div class="col-md-6">
-									<h5>Post-Code</h5>
-									<input type="text" name="txt_zip"  id="postcode"  required>
-                                    <!--  onkeyup="postcodeValidate()" -->
-									 <span id="mydiv"></span>
-
-									<!-- <mark id="postcodeMark" style="display: none;"> Enter postcode </mark> -->
-								</div>
-								<!-- latitude and longitude -->
-								
-							
-								<input type="hidden" name="txt_lat"  placeholder="e.g. 28.7041" >
-							    <input type="hidden" name="txt_long"  placeholder="e.g. 77.1025" >
-						
-
-								
-								
-
-								
-								
-
-							</div>
-							<!-- Row / End -->
-
-						</div>
-					<!-- </div> -->
-
-					<!-- Section -->
-					<!-- <div class="add-listing-section margin-top-45"> -->
-						
-						<!-- Headline -->
-						<!-- <div class="add-listing-headline"> -->
-						<div class="add-listing-headline">
-							<h3><i class="sl sl-icon-book-open"></i> Ticket</h3>
-							<!-- Switcher -->
-							 <label class="switch"><input type="checkbox" name="ticketCheck" checked><span class="slider round"></span></label>
-						</div>
-
-						<!-- Switcher ON-OFF Content -->
-						<div class="switcher-content">
-
-							<div class="row">
-								<div class="col-md-12">
-									<table id="pricing-list-container">
-										<tr class="pricing-list-item pattern">
-											<td>
-												<!-- <div class="fm-move"><i class="sl sl-icon-cursor-move"></i></div> -->
-												<div class="fm-input pricing-name"><input type="text" name="txt_ticketTitle" placeholder="Ticket Title" /></div>
-												<div class="fm-input pricing-ingredients">
-													<input type="text" name="txt_ticketDesc" placeholder="Ticket Description" /></div>
-												<div class="fm-input pricing-ingredients">
-													<input type="text" name="txt_ticketPrice" placeholder="Price" /></div>
-												<!-- <div class="fm-input pricing-price"><input type="text" name="txt_ticketPrize" placeholder="Price"  /></div> -->
-												<div class="fm-input pricing-name"><input type="number" name="txt_ticketQuantity" placeholder="Quantity" /></div>
-												<!-- <div class="fm-close"><a class="delete" href="#"><i class="fa fa-remove"></i></a></div> -->
-											</td>
-										</tr>
-									</table>
-									<!-- <a href="#" class="button add-pricing-list-item">Add Item</a> -->
-									<!-- <a href="#" class="button add-pricing-submenu">Add Category</a>
- -->								</div>
-							</div>
-
-						</div>
-						<!-- Switcher ON-OFF Content / End -->
-
-					<!-- </div> -->
-					<!-- Section / End -->
-
-					<!-- Section -->
-					<!-- <div class="add-listing-section margin-top-45"> -->
-
-						<!-- Headline -->
-						<!-- <div class="add-listing-headline"> -->
-						<div>
-							<h3><i class="sl sl-icon-docs"></i> More Details</h3>
-						</div>
-
-						<!-- Description -->
+						Description -->
 						
 
 						<!-- Row -->
@@ -320,129 +155,61 @@
 
 						<div class="form">
 							<h5>Description</h5>
-							<textarea class="WYSIWYG" name="description" cols="40" rows="3" id="description" spellcheck="true"></textarea>
+							<textarea class="WYSIWYG" name="description" cols="40" rows="1" id="description" spellcheck="true"></textarea>
 						</div>
 						<!-- Row / End -->
-
-
-						<!-- Row -->
-						<!-- <div class="row with-forms">
-
-				
-							<div class="col-md-4">
-								<h5 class="fb-input"><i class="fa fa-facebook-square"></i> Facebook <span>(optional)</span></h5>
-								<input type="text" name="txt_facebook" placeholder="https://www.facebook.com/">
-							</div>
-
-					
-							<div class="col-md-4">
-								<h5 class="twitter-input"><i class="fa fa-twitter"></i> Twitter <span>(optional)</span></h5>
-								<input type="text" name="txt_twitter" placeholder="https://www.twitter.com/">
-							</div>
-
-					
-							<div class="col-md-4">
-								<h5 class="gplus-input"><i class="fa fa-google-plus"></i> Google Plus <span>(optional)</span></h5>
-								<input type="text" name="txt_google" placeholder="https://plus.google.com/">
-							</div>
-
-						</div> -->
-						<!-- Row / End -->
-
-
-						<!-- Checkboxes -->
-						<!-- <h5 class="margin-top-30 margin-bottom-10">Amenities <span>(optional)</span></h5>
-						<div class="checkboxes in-row margin-bottom-20">
-					
-							<input id="check-a" type="checkbox" name="amenities[]" value="Elevator in building">
-							<label for="check-a">Elevator in building</label>
-
-							<input id="check-b" type="checkbox" name="amenities[]" value="Friendly workspace">
-							<label for="check-b">Friendly workspace</label>
-
-							<input id="check-c" type="checkbox" name="amenities[]" value="Instant Book">
-							<label for="check-c">Instant Book</label>
-
-							<input id="check-d" type="checkbox" name="amenities[]" value="Wireless Internet">
-							<label for="check-d">Wireless Internet</label>
-
-							<input id="check-e" type="checkbox" name="amenities[]" value="Free parking on premises" >
-							<label for="check-e">Free parking on premises</label>
-
-							<input id="check-f" type="checkbox" name="amenities[]" value="Free parking on street" >
-							<label for="check-f">Free parking on street</label>
-
-							<input id="check-g" type="checkbox" name="amenities[]" value="Smoking allowed">
-							<label for="check-g">Smoking allowed</label>	
-
-							<input id="check-h" type="checkbox" name="amenities[]" value="Events">
-							<label for="check-h">Events</label>
-					
-						</div> -->
-						<!-- Checkboxes / End -->
-
-					<!-- </div> -->
-					<!-- Section / End -->
-
-	 </div>
-					
-					
-					
-
-
-					
-
-					
-
-
-
-					<!-- Section -->
-					<!-- <div class="add-listing-section margin-top-45">
 						
-				
+
+					   
+						
+					
+						
+						<!-- Headline -->
+						<!-- <div class="add-listing-headline"> -->
 						<div class="add-listing-headline">
-							<h3><i class="sl sl-icon-book-open"></i> Pricing</h3>
-						
-							<label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>
+							<h4><i class="sl sl-icon-book-open"></i> Ticket</h4>
+							<!-- Switcher -->
+							 <label class="switch"><input type="checkbox" name="ticketCheck" checked><span class="slider round"></span></label>
 						</div>
 
-						
+						<!-- Switcher ON-OFF Content -->
 						<div class="switcher-content">
-
 							<div class="row">
 								<div class="col-md-12">
 									<table id="pricing-list-container">
 										<tr class="pricing-list-item pattern">
 											<td>
-												<div class="fm-move"><i class="sl sl-icon-cursor-move"></i></div>
-												<div class="fm-input pricing-name"><input type="text" placeholder="Title" /></div>
-												<div class="fm-input pricing-ingredients"><input type="text" placeholder="Description" /></div>
-												<div class="fm-input pricing-price"><input type="text" placeholder="Price" data-unit="USD" /></div>
-												<div class="fm-close"><a class="delete" href="#"><i class="fa fa-remove"></i></a></div>
+												<!-- <div class="fm-move"><i class="sl sl-icon-cursor-move"></i></div> -->
+												<div class="fm-input pricing-name"><input type="text" name="txt_ticketTitle" placeholder="Ticket Title" /></div>
+												<div class="fm-input pricing-ingredients">
+													<input type="text" name="txt_ticketDesc" placeholder="Ticket Description" /></div>
+												<div class="fm-input pricing-ingredients">
+													<input type="text" name="txt_ticketPrice" placeholder="Price" /></div>
+												<!-- <div class="fm-input pricing-price"><input type="text" name="txt_ticketPrize" placeholder="Price"  /></div> -->
+												<div class="fm-input pricing-name"><input type="number" name="txt_ticketQuantity" min="0" placeholder="Quantity" /></div>
+												<!-- <div class="fm-close"><a class="delete" href="#"><i class="fa fa-remove"></i></a></div> -->
 											</td>
 										</tr>
 									</table>
-									<a href="#" class="button add-pricing-list-item">Add Item</a>
-									<a href="#" class="button add-pricing-submenu">Add Category</a>
 								</div>
 							</div>
-
 						</div>
-				
+						
+						
 
-					</div> -->
-					<!-- Section / End -->
+
+	 
 
 
 					<div class="text-center">
 
-					<input class="button preview" onclick="postcodeValidate();" type="submit" name="btnAddFlyers" value="Add Flyer">
+					<input class="button preview" onclick="dateValidation();" type="submit" name="btnAddFlyers" value="Add Flyer">
 					</div>
-
+			</form>
 
 				</div>
 			</div>
-		</form>
+		</div>
 
 			<?php $this->load->viewF("inc/footerDashboard"); ?>
 			<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
@@ -472,7 +239,7 @@ this.$('#booking-time2').timeDropper({
 });
 
 var $clocks = $('.td-input');
-	_.each($clocks, function(clock){
+	$.each($clocks, function(clock){
 	clock.value = null;
 });
 </script> 
@@ -520,25 +287,56 @@ if (status == google.maps.GeocoderStatus.OK) {
 </script>
 
 <script type="text/javascript">
-    function postcodeValidate() {
+    /*function postcodeValidate() {
         var postcode = document.getElementById("postcode").value;
        
         /*if (password != confirmPassword) {*/
-        if (/^\d{6,10}$/.test(postcode)) {
-           /* document.getElementById('mydiv').innerHTML = '<p style="color:#227d05;"></p>';*/
+        /*if (/^\d{5,10}$/.test(postcode)) {
+            document.getElementById('mydiv').innerHTML = '<p style="color:#227d05;"></p>';
             return true;
-        } else{ document.getElementById('mydiv').innerHTML = '<p style="color:#e80c0c;">Enter atleast six digit</p>'; }
+        } else{ document.getElementById('mydiv').innerHTML = '<p style="color:#e80c0c;">Enter atleast five digit</p>'; }
         return false;
-    }
+    }*/
 </script>
 
 
+<script type="text/javascript">
+
+	function dateValidation(){
+
+	//alert("test"); exit ;
+		var startDate = document.getElementById("booking-date1").value;
+		var endDate = document.getElementById("booking-date2").value;
+		var startTime = document.getElementById("booking-time1").value;
+		var endTime = document.getElementById("booking-time2").value;
+	//alert(startTime); exit ;
+		if (startDate==endDate && startTime==endTime) {
+		
+			document.getElementById('dateSame').innerHTML = '<p style="color:#e80c0c;">Add Correct Date And Time</p>';
+			 return false;
+		} else{
+			document.getElementById('dateSame').innerHTML = ' ';
+			return true;
+		};
+	}
 
 
+	
+	Dropzone.options.myAwesomeDropzone = {
+		maxFilesize:1,
+	  maxFiles: 4,
+	  acceptedFiles: ".jpeg,.jpg,.png",
+	  accept: function(file, done) {
+		console.log("uploaded");
+		done();
+	  },
+	  init: function() {
+		this.on("maxfilesexceeded", function(file){
+			//AddFlyerImageAlert("Upload max 4 photos!");
+			ymz.jq_alert({title:"Alert", text:"You have already uploaded 4 photos.", ok_btn:"Okey", close_fn:null});
+			this.removeFile(file);
+		});
+	  }
+	};
 
-
-
-			
-
-
-
+</script>

@@ -13,9 +13,9 @@ $db_config = [
 	//Server
 	"production"  => [
 						"host" => "localhost",
-						"database" => "syphorex_db_funcano",
-						"username" => "syphorex_dbFCusr",
-						"password" => "=pE[JDp{*Q%{"
+						"database" => "db_funcano2018",
+						"username" => "funcandbu",
+						"password" => "Q0xYWe-FNRlI"
 					 ]
 ];
 //echo $_SERVER['HTTP_HOST']; exit;
@@ -24,7 +24,7 @@ if ($_SERVER['HTTP_HOST'] == "parth") {
 	define("UPLOADPATH", BASE_URL."/system/static/uploads");
 	define("ABSUPLOADPATH", "../../system/static/uploads");
 } else {
-	define("BASE_URL", "http://funcano.syphor.in");
+	define("BASE_URL", "http://funcano.com");
 	define("UPLOADPATH", BASE_URL."/system/static/uploads");
 	define("ABSUPLOADPATH", "/home1/syphorex/public_html/funcano/system/static/uploads");
 }
@@ -44,7 +44,7 @@ class Common_model {
 		}*/
 		if ($_SERVER['HTTP_HOST'] == "parth") {
 			$config = $db_config['development'];
-		}else if ( $_SERVER['HTTP_HOST'] == "funcano.syphor.in") {
+		}else if ( $_SERVER['HTTP_HOST'] == "funcano.com") {
 			$config = $db_config['production'];
 		}else {
 			die("Environment must be either 'development' or 'production'.");
@@ -296,12 +296,25 @@ WHERE mg.magazine_id =1*/
 	| Function to Delete data 
 	|--------------------------------------------------------------------------
 	*/ 	
-	function del($tablename="",$cond=array())
+	/*function del($tablename="",$cond=array())
 	{ 
 		if( count($cond) )
 		{  //echo $tablename;exit;
 			//echo $cond;exit;
           $flag = $this->db->delete($tablename,$cond); 
+			return $flag;
+		}else{
+			return FALSE;
+		}
+    }*/
+
+    function del($tablename="",$cond="")
+	{ 
+		$db = $this->dbConnect();
+		if($cond != "")
+		{  
+          $flag = $db->query("delete from ".$tablename." where ".$cond); 
+		 // print_r($flag); exit;
 			return $flag;
 		}else{
 			return FALSE;
